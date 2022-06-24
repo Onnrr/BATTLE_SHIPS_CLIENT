@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -55,7 +62,9 @@ public class LoginController {
             return;
         }
 
-        String command = LOGIN_CHECK + " " + nameField.getText() + " " + passwordField.getText();
+        String hashed = hashPassword(passwordField.getText());
+        System.out.println(hashed);
+        String command = LOGIN_CHECK + " " + nameField.getText() + " " + hashed;
 
         out.println(command);
 
@@ -96,4 +105,25 @@ public class LoginController {
         stage.show();
     }
 
+    private String hashPassword(String password) {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = null;
+
+        byte[] hash = {};
+        try {
+            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        } catch (NoSuchAlgorithmException e2) {
+            e2.printStackTrace();
+        }
+        try {
+            hash = factory.generateSecret(spec).getEncoded();
+        } catch (InvalidKeySpecException e2) {
+            e2.printStackTrace();
+        }
+        return new String(hash);
+    }
 }

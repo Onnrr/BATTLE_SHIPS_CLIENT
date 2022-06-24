@@ -6,6 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -135,7 +142,9 @@ public class SignupController {
             return;
         }
 
-        String command = CREATE + " " + nameField.getText() + " " + passwordField.getText() + " " + mailField.getText();
+        String hashed = hashPassword(passwordField.getText());
+
+        String command = CREATE + " " + nameField.getText() + " " + hashed + " " + mailField.getText();
 
         out.println(command);
         String message = "";
@@ -194,4 +203,25 @@ public class SignupController {
         return VALID;
     }
 
+    private String hashPassword(String password) {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = null;
+
+        byte[] hash = {};
+        try {
+            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        } catch (NoSuchAlgorithmException e2) {
+            e2.printStackTrace();
+        }
+        try {
+            hash = factory.generateSecret(spec).getEncoded();
+        } catch (InvalidKeySpecException e2) {
+            e2.printStackTrace();
+        }
+        return new String(hash);
+    }
 }
