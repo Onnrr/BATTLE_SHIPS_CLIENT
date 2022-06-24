@@ -106,12 +106,12 @@ public class SignupController {
         } else if (precheck == MAIL_EMPTY) {
             mailError.setVisible(true);
             mailError.setText("Mail cannot be empty");
-            mailError.getStyleClass().add("invalid");
+            mailField.getStyleClass().add("invalid");
             return;
         } else if (precheck == INVALID_MAIL) {
             mailError.setVisible(true);
             mailError.setText("Invalid mail");
-            mailError.getStyleClass().add("invalid");
+            mailField.getStyleClass().add("invalid");
             return;
         } else if (precheck == PASSWORD_EMPTY) {
             passwordError.setVisible(true);
@@ -154,7 +154,7 @@ public class SignupController {
             nameField.getStyleClass().add("invalid");
             mailError.setVisible(true);
             mailError.setText("User name or mail is already used");
-            mailError.getStyleClass().add("invalid");
+            mailField.getStyleClass().add("invalid");
         } else {
             System.out.println(message);
         }
