@@ -6,10 +6,12 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -95,6 +97,45 @@
                         </Hyperlink>
                      </children>
                   </HBox>
+                  <Text fx:id="mailError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Invalid Mail" visible="false" wrappingWidth="288.3791961669922" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="10.76" radius="5.1" width="11.64">
+                           <color>
+                              <Color red="0.21052631735801697" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+                  <Text fx:id="nameError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Name too short" visible="false" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="11.64" radius="4.735" width="9.3">
+                           <color>
+                              <Color red="0.1894736886024475" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+                  <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Text" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="9.3" radius="5.905" width="16.32">
+                           <color>
+                              <Color red="0.20000000298023224" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
                </children>
             </GridPane>
          </children>

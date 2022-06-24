@@ -51,7 +51,8 @@ public class LoginController {
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {
             System.out.println("Failed due to connection");
-            e1.printStackTrace();
+            // TODO
+            return;
         }
 
         String command = LOGIN_CHECK + " " + nameField.getText() + " " + passwordField.getText();

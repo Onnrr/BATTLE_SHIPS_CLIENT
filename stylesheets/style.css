@@ -75,3 +75,16 @@
     -fx-underline: true;
     -fx-font-size: 14;
 }
+
+.invalid {
+    -fx-border-width: 0 2 2 2;
+    -fx-border-color: rgb(140, 0, 0);
+}
+
+.errortext {
+    -fx-background-color: #172500;
+    -fx-fill: rgb(170, 23, 23);
+
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+}
