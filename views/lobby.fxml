@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LobbyController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,11 +21,6 @@
     <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" GridPane.rowIndex="2">
-         <children>
-            <Button layoutX="946.0" layoutY="9.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Start Game" />
-         </children>
-      </AnchorPane>
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="100.0" />
@@ -36,7 +31,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: blue;">
+            <VBox fx:id="notificationsBox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #4C4E52;">
                <children>
                   <AnchorPane maxHeight="30.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
@@ -52,7 +47,7 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: blue;" GridPane.columnIndex="2">
+            <VBox fx:id="rankingBox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #4C4E52;" GridPane.columnIndex="2">
                <children>
                   <AnchorPane maxHeight="30.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                      <children>
@@ -65,28 +60,7 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.columnIndex="1">
-               <children>
-                  <Button maxWidth="50.0" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" prefWidth="50.0" text="Player1">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <FlowPane.margin>
-                        <Insets left="20.0" top="20.0" />
-                     </FlowPane.margin>
-                  </Button>
-                  <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" text="Player2">
-                     <FlowPane.margin>
-                        <Insets left="20.0" top="20.0" />
-                     </FlowPane.margin>
-                  </Button>
-                  <Button minHeight="100.0" minWidth="100.0" mnemonicParsing="false" text="Player3">
-                     <FlowPane.margin>
-                        <Insets left="20.0" top="20.0" />
-                     </FlowPane.margin>
-                  </Button>
-               </children>
-            </FlowPane>
+            <FlowPane fx:id="onlinePlayers" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane style="-fx-background-color: red;">
@@ -104,11 +78,27 @@
                   <Font size="34.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <Text fx:id="userName" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
+         </children>
+      </GridPane>
+      <GridPane style="-fx-background-color: #4C4E52;" GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button minHeight="50.0" minWidth="140.0" mnemonicParsing="false" text="Start Game" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets right="25.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </children>

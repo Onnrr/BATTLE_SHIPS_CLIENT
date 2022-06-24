@@ -1,27 +1,31 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
-class main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("views/login.fxml"));
+        loader.load();
+
+        Parent p = loader.getRoot();
+        Scene scene = new Scene(p);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Battle Ships");
+        primaryStage.setFullScreen(false);
+        primaryStage.setHeight(700);
+        primaryStage.setWidth(1100);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        Socket s;
-        BufferedReader in;
-        PrintWriter out;
-
-        try {
-            s = new Socket("localhost", 9999);
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintWriter(s.getOutputStream(), true);
-            out.println("login elvan elv");
-            while (true) {
-            }
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
+        launch(args);
     }
 }

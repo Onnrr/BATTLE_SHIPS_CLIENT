@@ -1,0 +1,77 @@
+.background {
+    -fx-background-color: #4C4E52;
+}
+
+.text-field {
+    -fx-background-color: #414346;
+    -fx-font-size: 18;
+    -fx-border-width: 0 0 2 2;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.text-field:hover {
+    -fx-background-color: #383a3d;
+    -fx-border-width: 0 0 3 2;
+    -fx-font-size: 19;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.text-field:focused {
+    -fx-background-color: #383a3d;
+    -fx-border-width: 0 0 3 2;
+    -fx-font-size: 19;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.password-field {
+    -fx-background-color: #414346;
+    -fx-font-size: 18;
+    -fx-border-width: 0 0 2 2;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.loginButton {
+    -fx-background-color: #34068a;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.loginButton:hover {
+    -fx-background-color: #30057e;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.signupButton {
+    -fx-background-color: #34068a;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.signupButton:hover {
+    -fx-background-color: #30057e;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.hyperlink {
+    -fx-text-fill: #c3a2ff;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+    -fx-font-size: 14;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: rgb(138, 105, 199);
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-font-size: 14;
+}
