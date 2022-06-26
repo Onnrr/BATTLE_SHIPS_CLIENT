@@ -88,3 +88,8 @@
     -fx-font-weight: bold;
     -fx-font-size: 18;
 }
+
+.invalid:hover {
+    -fx-border-width: 0 2 2 2;
+    -fx-border-color: rgb(140, 0, 0);
+}

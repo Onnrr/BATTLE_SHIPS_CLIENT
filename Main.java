@@ -19,9 +19,12 @@ public class Main extends Application {
         primaryStage.setTitle("Battle Ships");
         primaryStage.setFullScreen(false);
         primaryStage.setHeight(700);
-        primaryStage.setWidth(1100);
+        primaryStage.setWidth(1200);
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
+        primaryStage.setMaxHeight(1000);
+        primaryStage.setMaxWidth(1535);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

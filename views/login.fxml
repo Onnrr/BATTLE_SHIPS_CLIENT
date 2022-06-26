@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,7 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" styleClass="background" stylesheets="@../stylesheets/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+
+<GridPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" styleClass="background" stylesheets="@../stylesheets/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="0.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="600.0" prefWidth="1100.0" />
@@ -94,6 +96,25 @@
                         </Hyperlink>
                      </children>
                   </HBox>
+                  <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Wrong user name or password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="9.3" radius="3.5650000000000004" width="6.96" />
+                     </effect>
+                  </Text>
+                  <Text fx:id="nameError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="User name cannot be empty" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <effect>
+                        <DropShadow height="9.3" radius="3.5650000000000004" width="6.96" />
+                     </effect>
+                  </Text>
                </children>
             </GridPane>
          </children>

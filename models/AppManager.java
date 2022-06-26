@@ -21,6 +21,8 @@ public class AppManager {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(p, ((Node) event.getSource()).getScene().getWidth(),
                 ((Node) event.getSource()).getScene().getHeight());
+
+        stage.setWidth(stage.getWidth() + 0.0001);
         stage.setScene(scene);
         stage.show();
     }

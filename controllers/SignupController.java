@@ -6,25 +6,30 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ResourceBundle;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-public class SignupController {
+public class SignupController implements Initializable {
     final String SUCCESS = "SUCCESS";
     final String FAIL = "FAIL";
     final String CREATE = "create";
@@ -78,6 +83,10 @@ public class SignupController {
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         Scene scene = new Scene(p, ((Node) e.getSource()).getScene().getWidth(),
                 ((Node) e.getSource()).getScene().getHeight());
+
+        stage.setHeight(stage.getHeight() + 0.0001);
+        // stage.setWidth(stage.getWidth() + 0.000001);
+
         stage.setScene(scene);
         stage.show();
     }
@@ -197,31 +206,57 @@ public class SignupController {
         if (!mailField.getText().contains("@")) {
             return INVALID_MAIL;
         }
-        if (!mailField.getText().contains(".com")) {
-            return INVALID_MAIL;
-        }
         return VALID;
     }
 
+    public void reset() {
+        nameError.setVisible(false);
+        mailError.setVisible(false);
+        passwordError.setVisible(false);
+
+        nameField.getStyleClass().remove("invalid");
+        mailField.getStyleClass().remove("invalid");
+        passwordField.getStyleClass().remove("invalid");
+
+    }
+
     private String hashPassword(String password) {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
+        // SecureRandom random = new SecureRandom();
+        // byte[] salt = new byte[16];
+        // random.nextBytes(salt);
 
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-        SecretKeyFactory factory = null;
+        // KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        // SecretKeyFactory factory = null;
 
-        byte[] hash = {};
-        try {
-            factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        } catch (NoSuchAlgorithmException e2) {
-            e2.printStackTrace();
-        }
-        try {
-            hash = factory.generateSecret(spec).getEncoded();
-        } catch (InvalidKeySpecException e2) {
-            e2.printStackTrace();
-        }
-        return new String(hash);
+        // byte[] hash = {};
+        // try {
+        // factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        // } catch (NoSuchAlgorithmException e2) {
+        // e2.printStackTrace();
+        // }
+        // try {
+        // hash = factory.generateSecret(spec).getEncoded();
+        // } catch (InvalidKeySpecException e2) {
+        // e2.printStackTrace();
+        // }
+        // TODO
+        return password;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        nameField.setOnMouseClicked(e -> {
+            reset();
+        });
+        passwordField.setOnMouseClicked(e -> {
+            reset();
+        });
+        mailField.setOnMouseClicked(e -> {
+            reset();
+        });
+        repeatPasswordField.setOnMouseClicked(e -> {
+            reset();
+        });
+
     }
 }
