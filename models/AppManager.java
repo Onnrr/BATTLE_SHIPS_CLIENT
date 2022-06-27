@@ -4,6 +4,7 @@ package models;
 import java.io.IOException;
 import java.net.URL;
 import javafx.scene.Node;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

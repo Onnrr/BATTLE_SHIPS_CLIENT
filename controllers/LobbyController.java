@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -49,7 +50,12 @@ public class LobbyController implements Initialise, Runnable {
 
         String[] result = p.getOnlinePlayers().split(" ");
         for (int i = 1; i < result.length - 1; i += 2) {
-            OnlinePlayer cur = new OnlinePlayer(result[i], Integer.parseInt(result[i + 1]));
+            Button inviteButton = new Button();
+            inviteButton.setOnMouseClicked(e -> {
+                System.out.println("aaa");
+                // TODO
+            });
+            OnlinePlayer cur = new OnlinePlayer(result[i], Integer.parseInt(result[i + 1]), inviteButton);
             onlinePlayers.getChildren().add(cur);
         }
 
@@ -68,7 +74,12 @@ public class LobbyController implements Initialise, Runnable {
     private void execute(String message) {
         String[] result = message.split(" ");
         if (result[0].equals(CONNECTED)) {
-            OnlinePlayer newPlayer = new OnlinePlayer(result[1], 0);
+            Button inviteButton = new Button();
+            inviteButton.setOnMouseClicked(e -> {
+                System.out.println("aaa");
+                // TODO
+            });
+            OnlinePlayer newPlayer = new OnlinePlayer(result[1], 0, inviteButton);
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

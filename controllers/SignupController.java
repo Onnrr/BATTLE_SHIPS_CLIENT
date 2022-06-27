@@ -101,46 +101,55 @@ public class SignupController implements Initializable {
             nameError.setVisible(true);
             nameError.setText("User name cannot be empty");
             nameField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == NAME_TOO_SHORT) {
             nameError.setVisible(true);
             nameError.setText("User name is too short");
             nameField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == NAME_TOO_LONG) {
             nameError.setVisible(true);
             nameError.setText("User name is too long");
             nameField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == MAIL_EMPTY) {
             mailError.setVisible(true);
             mailError.setText("Mail cannot be empty");
             mailField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == INVALID_MAIL) {
             mailError.setVisible(true);
             mailError.setText("Invalid mail");
             mailField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_EMPTY) {
             passwordError.setVisible(true);
             passwordError.setText("Password cannot be empty");
             passwordField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_TOO_SHORT) {
             passwordError.setVisible(true);
             passwordError.setText("Password is too short");
             passwordField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_TOO_LONG) {
             passwordError.setVisible(true);
             passwordError.setText("Password is too long");
             passwordField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_MATCH) {
             passwordError.setVisible(true);
             passwordError.setText("Passwords do not match");
             passwordField.getStyleClass().add("invalid");
+            out.println("disconnect");
             return;
         }
 
@@ -160,12 +169,12 @@ public class SignupController implements Initializable {
             System.out.println("Account created");
         } else if (message.equals(FAIL)) {
             System.out.println("Failed");
-            // nameError.setVisible(true);
-            // nameError.setText("User name or mail is already used");
+
             nameField.getStyleClass().add("invalid");
             mailError.setVisible(true);
             mailError.setText("User name or mail is already used");
             mailField.getStyleClass().add("invalid");
+            out.println("disconnect");
         } else {
             System.out.println(message);
         }

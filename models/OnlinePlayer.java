@@ -13,13 +13,13 @@ public class OnlinePlayer extends AnchorPane {
     Text userNameText;
     public String name;
     int status;
-    Button inviteButton;
+
     Button joinButton;
     ImageView image;
     ImageView invite;
     ImageView join;
 
-    public OnlinePlayer(String name, int status) {
+    public OnlinePlayer(String name, int status, Button inviteButton) {
         this.name = name;
         this.status = status;
         userNameText = new Text(name);
@@ -56,7 +56,6 @@ public class OnlinePlayer extends AnchorPane {
         this.setMinHeight(150);
         this.setMinWidth(150);
 
-        inviteButton = new Button();
         inviteButton.setMinSize(30, 30);
         inviteButton.setMaxSize(30, 30);
         joinButton = new Button();
@@ -68,7 +67,7 @@ public class OnlinePlayer extends AnchorPane {
 
         AnchorPane.setTopAnchor(userNameText, 0.0);
         AnchorPane.setLeftAnchor(userNameText, 5.0);
-        AnchorPane.setBottomAnchor(image, 30.0);
+        AnchorPane.setBottomAnchor(image, 35.0);
         AnchorPane.setLeftAnchor(image, 30.0);
 
         AnchorPane.setBottomAnchor(inviteButton, 5.0);
@@ -85,5 +84,9 @@ public class OnlinePlayer extends AnchorPane {
 
     public String getName() {
         return name;
+    }
+
+    public void setStatus(int stat) {
+        status = stat;
     }
 }
