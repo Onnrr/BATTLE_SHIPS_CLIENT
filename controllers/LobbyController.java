@@ -5,15 +5,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import models.Initialise;
+import models.OnlinePlayer;
 import models.Player;
 
 public class LobbyController implements Initialise, Runnable {
+    final String CONNECTED = "CONNECTED";
+    final String DISCONNECTED = "DISCONNECTED";
+
     @FXML
     Text userName;
 
@@ -31,38 +38,57 @@ public class LobbyController implements Initialise, Runnable {
     Player p;
     BufferedReader in;
     PrintWriter out;
-    String message;
 
     @Override
-    public void initialise(Player p) {
-        this.p = p;
+    public void initialise(Player player) {
+        p = player;
         s = p.getSocket();
         userName.setText(p.getName());
-        try {
-            s = new Socket("localhost", 9999);
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            out = new PrintWriter(s.getOutputStream(), true);
-        } catch (IOException e1) {
-            System.out.println("Failed due to connection");
-            e1.printStackTrace();
+        System.out.println(p.getOnlinePlayers());
+        start();
+
+        String[] result = p.getOnlinePlayers().split(" ");
+        for (int i = 1; i < result.length - 1; i += 2) {
+            OnlinePlayer cur = new OnlinePlayer(result[i], Integer.parseInt(result[i + 1]));
+            onlinePlayers.getChildren().add(cur);
         }
+
     }
 
     @Override
     public void run() {
+        String message;
         while (true) {
-            try {
-                message = in.readLine();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            message = p.getMessage();
+            System.out.println(message);
             execute(message);
         }
     }
 
     private void execute(String message) {
-
+        String[] result = message.split(" ");
+        if (result[0].equals(CONNECTED)) {
+            OnlinePlayer newPlayer = new OnlinePlayer(result[1], 0);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    onlinePlayers.getChildren().add(newPlayer);
+                }
+            });
+        } else if (result[0].equals(DISCONNECTED)) {
+            for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
+                if (result[1].equals(((OnlinePlayer) onlinePlayers.getChildren().get(i)).getName())) {
+                    final Integer index = Integer.valueOf(i);
+                    // TODOOOOO errorss
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            onlinePlayers.getChildren().remove(index);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     public void start() {

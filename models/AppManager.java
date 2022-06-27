@@ -11,16 +11,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class AppManager {
-    public static void changeScene(URL fxmlfile, ActionEvent event, Player player) throws IOException {
+    public static void changeScene(URL fxmlfile, ActionEvent e, Player player) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(fxmlfile);
         loader.load();
         Initialise c2 = loader.getController();
         c2.initialise(player);
         Parent p = loader.getRoot();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(p, ((Node) event.getSource()).getScene().getWidth(),
-                ((Node) event.getSource()).getScene().getHeight());
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(p, ((Node) e.getSource()).getScene().getWidth(),
+                ((Node) e.getSource()).getScene().getHeight());
+
+        ((Stage) ((Node) e.getSource()).getScene().getWindow()).setOnCloseRequest(event -> {
+            player.sendMessage("disconnect");
+        });
 
         stage.setWidth(stage.getWidth() + 0.0001);
         stage.setScene(scene);

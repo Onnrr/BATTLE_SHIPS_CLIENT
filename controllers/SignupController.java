@@ -4,27 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ConnectException;
+
 import java.net.Socket;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+
 import java.util.ResourceBundle;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -85,7 +79,6 @@ public class SignupController implements Initializable {
                 ((Node) e.getSource()).getScene().getHeight());
 
         stage.setHeight(stage.getHeight() + 0.0001);
-        // stage.setWidth(stage.getWidth() + 0.000001);
 
         stage.setScene(scene);
         stage.show();

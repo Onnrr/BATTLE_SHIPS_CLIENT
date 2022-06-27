@@ -6,14 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
-import java.util.ResourceBundle;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -103,8 +97,12 @@ public class LoginController implements Initializable {
             passwordField.getStyleClass().add("invalid");
         } else if (result[0].equals(INFO)) {
             System.out.println("Login successful");
-            Player p = new Player(s, Integer.parseInt(result[1]), result[2], Integer.parseInt(result[3]), result[4],
+            Player p = new Player(s, in, out, Integer.parseInt(result[1]), result[2], Integer.parseInt(result[3]),
+                    result[4],
                     null);
+            System.out.println("player created");
+            String online = in.readLine();
+            p.setOnlinePlayers(online);
             AppManager.changeScene(getClass().getResource("/views/lobby.fxml"), e, p);
         } else {
             System.out.println(message);
@@ -126,7 +124,6 @@ public class LoginController implements Initializable {
         Scene scene = new Scene(p, ((Node) e.getSource()).getScene().getWidth(),
                 ((Node) e.getSource()).getScene().getHeight());
 
-        // stage.setHeight(stage.getHeight() + 0.0001);
         stage.setWidth(stage.getWidth() + 0.0001);
 
         stage.setScene(scene);
