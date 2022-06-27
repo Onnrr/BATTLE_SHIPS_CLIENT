@@ -52,6 +52,7 @@ public class LobbyController implements Initialise, Runnable {
         userName.setText(p.getName());
         System.out.println(p.getOnlinePlayers());
         start();
+        notificationsBox.getChildren().clear();
 
         String[] result = p.getOnlinePlayers().split(" ");
         for (int i = 1; i < result.length - 2; i += 3) {
@@ -80,6 +81,7 @@ public class LobbyController implements Initialise, Runnable {
             @Override
             public void run() {
                 notificationsBox.getChildren().add(newNot);
+                System.out.println(notificationsBox.getChildren().size());
             }
         });
     }
@@ -135,11 +137,13 @@ public class LobbyController implements Initialise, Runnable {
                         declineNotification(e);
                     });
                     notificationsBox.getChildren().add(newNot);
+                    System.out.println(notificationsBox.getChildren().size());
                 }
             });
         } else if (result[0].equals(DECLINED)) {
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
+                System.out.println("aa");
                 Notification cur = (Notification) notificationsBox.getChildren().get(i);
                 if (cur.getID() == otherID) {
                     final Integer index = Integer.valueOf(i);
@@ -147,7 +151,7 @@ public class LobbyController implements Initialise, Runnable {
                         @Override
                         public void run() {
                             notificationsBox.getChildren().remove(notificationsBox.getChildren().get(index));
-
+                            System.out.println(notificationsBox.getChildren().size());
                             for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
                                 if (((OnlinePlayer) onlinePlayers.getChildren().get(i)).getID() == otherID) {
                                     ((OnlinePlayer) onlinePlayers.getChildren().get(i)).getInviteButton()
