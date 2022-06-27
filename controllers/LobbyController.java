@@ -76,12 +76,9 @@ public class LobbyController implements Initialise, Runnable {
                 }
             });
         } else if (result[0].equals(DISCONNECTED)) {
-            System.out.println("burdayız");
             for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
                 if (result[1].equals(((OnlinePlayer) onlinePlayers.getChildren().get(i)).getName())) {
                     final Integer index = Integer.valueOf(i);
-                    System.out.println("heyy");
-                    // TODOOOOO errorss
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
