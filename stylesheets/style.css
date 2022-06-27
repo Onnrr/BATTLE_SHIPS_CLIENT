@@ -101,6 +101,13 @@
     -fx-background-insets: 20px;
 }
 
+.notification {
+    -fx-background-color: #b7db00;
+    -fx-padding: 2px;
+    -fx-border-insets: 2px;
+    -fx-background-insets: 2px;
+}
+
 .onlineUserName {
     -fx-font-weight: bold;
     -fx-font-size: 20;

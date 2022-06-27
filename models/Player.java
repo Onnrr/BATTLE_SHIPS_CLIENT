@@ -58,6 +58,10 @@ public class Player {
         return userName;
     }
 
+    public int getID() {
+        return id;
+    }
+
     public String getMessage() {
         try {
             return in.readLine();

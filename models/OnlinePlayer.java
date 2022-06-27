@@ -6,20 +6,22 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class OnlinePlayer extends AnchorPane {
     Text userNameText;
     public String name;
     int status;
-
+    int id;
+    InviteButton inviteButton;
     Button joinButton;
     ImageView image;
     ImageView invite;
     ImageView join;
 
-    public OnlinePlayer(String name, int status, Button inviteButton) {
+    public OnlinePlayer(String name, int ID, int status, InviteButton inviteButton) {
+        this.inviteButton = inviteButton;
+        id = ID;
         this.name = name;
         this.status = status;
         userNameText = new Text(name);
@@ -88,5 +90,13 @@ public class OnlinePlayer extends AnchorPane {
 
     public void setStatus(int stat) {
         status = stat;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public InviteButton getInviteButton() {
+        return inviteButton;
     }
 }

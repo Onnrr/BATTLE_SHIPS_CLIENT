@@ -223,24 +223,6 @@ public class SignupController implements Initializable {
     }
 
     private String hashPassword(String password) {
-        // SecureRandom random = new SecureRandom();
-        // byte[] salt = new byte[16];
-        // random.nextBytes(salt);
-
-        // KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-        // SecretKeyFactory factory = null;
-
-        // byte[] hash = {};
-        // try {
-        // factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        // } catch (NoSuchAlgorithmException e2) {
-        // e2.printStackTrace();
-        // }
-        // try {
-        // hash = factory.generateSecret(spec).getEncoded();
-        // } catch (InvalidKeySpecException e2) {
-        // e2.printStackTrace();
-        // }
         // TODO
         return password;
     }
