@@ -1,0 +1,49 @@
+.top {
+    -fx-background-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.bottom {
+    -fx-background-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.header {
+    -fx-background-color: #34068a;
+    -fx-text-fill: white;
+}
+
+.title {
+    -fx-fill: white;
+}
+
+.menuButton {
+    -fx-background-color: #1c034c;
+}
+
+.menuButton:hover {
+    -fx-background-color: #34068a;
+}
+
+.headerTitle {
+    -fx-fill: white;
+}
+
+.online {
+    -fx-background-color: #b7db00;
+    -fx-padding: 20px;
+    -fx-border-insets: 20px;
+    -fx-background-insets: 20px;
+}
+
+.notification {
+    -fx-background-color: #b7db00;
+    -fx-padding: 2px;
+    -fx-border-insets: 2px;
+    -fx-background-insets: 2px;
+}
+
+.onlineUserName {
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}

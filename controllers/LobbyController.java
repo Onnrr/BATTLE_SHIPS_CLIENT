@@ -1,14 +1,16 @@
 package controllers;
 
 import java.io.BufferedReader;
-
+import java.io.File;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 import javafx.application.Platform;
 
 import javafx.fxml.FXML;
-
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -26,6 +28,18 @@ public class LobbyController implements Initialise, Runnable {
     final String INVITE = "invite";
     final String INVITATION = "INVITATION";
     final String DECLINED = "DECLINED";
+
+    @FXML
+    Button logoutButton;
+
+    @FXML
+    Button homeButton;
+
+    @FXML
+    Button settingsButton;
+
+    @FXML
+    Button chatButton;
 
     @FXML
     Text userName;
@@ -54,6 +68,36 @@ public class LobbyController implements Initialise, Runnable {
         start();
         notificationsBox.getChildren().clear();
 
+        ImageView home = new ImageView();
+        ImageView logout = new ImageView();
+        ImageView settings = new ImageView();
+        ImageView chat = new ImageView();
+
+        File file = new File("images/home.png");
+        Image img = new Image(file.toURI().toString());
+        home.setImage(img);
+        home.setFitHeight(30);
+        home.setFitWidth(30);
+        homeButton.setGraphic(home);
+        file = new File("images/settings.png");
+        img = new Image(file.toURI().toString());
+        settings.setImage(img);
+        settings.setFitHeight(30);
+        settings.setFitWidth(30);
+        settingsButton.setGraphic(settings);
+        file = new File("images/logout.png");
+        img = new Image(file.toURI().toString());
+        logout.setImage(img);
+        logout.setFitHeight(30);
+        logout.setFitWidth(30);
+        logoutButton.setGraphic(logout);
+        file = new File("images/chat.png");
+        img = new Image(file.toURI().toString());
+        chat.setImage(img);
+        chat.setFitHeight(30);
+        chat.setFitWidth(30);
+        chatButton.setGraphic(chat);
+
         String[] result = p.getOnlinePlayers().split(" ");
         for (int i = 1; i < result.length - 2; i += 3) {
             InviteButton inviteButton = new InviteButton(Integer.parseInt(result[i]), result[i + 1]);
@@ -73,7 +117,6 @@ public class LobbyController implements Initialise, Runnable {
         command += INVITE + " " + otherID;
         p.sendMessage(command);
         ((InviteButton) event.getSource()).setDisable(true);
-        // TODO enable when declined
 
         Notification newNot = new Notification("Pending invite",
                 "Waiting for " + ((InviteButton) event.getSource()).getName() + "'s response", otherID);
@@ -99,6 +142,7 @@ public class LobbyController implements Initialise, Runnable {
     private void execute(String message) {
         String[] result = message.split(" ");
         if (result[0].equals(CONNECTED)) {
+            // Adds connected player to the list
             InviteButton inviteButton = new InviteButton(Integer.parseInt(result[1]), result[2]);
             inviteButton.setOnMouseClicked(e -> {
                 invite(e);
@@ -112,6 +156,7 @@ public class LobbyController implements Initialise, Runnable {
                 }
             });
         } else if (result[0].equals(DISCONNECTED)) {
+            // Removes the disconnected player from the list
             for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
                 if (result[1].equals(((OnlinePlayer) onlinePlayers.getChildren().get(i)).getName())) {
                     final Integer index = Integer.valueOf(i);
@@ -124,6 +169,7 @@ public class LobbyController implements Initialise, Runnable {
                 }
             }
         } else if (result[0].equals(INVITATION)) {
+            // Adds game invite notification
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -141,9 +187,9 @@ public class LobbyController implements Initialise, Runnable {
                 }
             });
         } else if (result[0].equals(DECLINED)) {
+            // Just deletes the declined pending invite
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
-                System.out.println("aa");
                 Notification cur = (Notification) notificationsBox.getChildren().get(i);
                 if (cur.getID() == otherID) {
                     final Integer index = Integer.valueOf(i);

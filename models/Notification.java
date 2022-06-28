@@ -20,7 +20,7 @@ public class Notification extends AnchorPane {
         this.setMaxHeight(100);
         this.setMaxWidth(Double.MAX_VALUE);
         this.setMinHeight(100);
-        this.getStylesheets().add(getClass().getResource("/stylesheets/style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
         this.getStyleClass().add("notification");
 
         header = new Text(headerString);
@@ -66,7 +66,7 @@ public class Notification extends AnchorPane {
         this.setMaxHeight(100);
         this.setMaxWidth(Double.MAX_VALUE);
         this.setMinHeight(100);
-        this.getStylesheets().add(getClass().getResource("/stylesheets/style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
         this.getStyleClass().add("notification");
 
         header = new Text(headerString);

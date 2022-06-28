@@ -49,7 +49,7 @@ public class OnlinePlayer extends AnchorPane {
         image.minHeight(100);
         image.minWidth(100);
 
-        this.getStylesheets().add(getClass().getResource("/stylesheets/style.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
         this.getStyleClass().add("online");
         userNameText.getStyleClass().add("onlineUserName");
 
