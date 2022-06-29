@@ -11,12 +11,14 @@ public class Player {
     final int SHIPS = 20;
 
     int id;
+    int opponentId;
     Socket s;
     String userName;
     String mail;
     Image photo;
     int score;
     String onlinePlayers;
+    String rank;
 
     BufferedReader in;
     PrintWriter out;
@@ -37,6 +39,7 @@ public class Player {
 
         this.in = in;
         this.out = out;
+        opponentId = -1;
 
         remaining = 20;
         myTable = null;
@@ -46,8 +49,24 @@ public class Player {
         onlinePlayers = online;
     }
 
+    public void settOpponentID(int opId) {
+        opponentId = opId;
+    }
+
+    public int getOpponentID() {
+        return opponentId;
+    }
+
     public String getOnlinePlayers() {
         return onlinePlayers;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getRank() {
+        return rank;
     }
 
     public Socket getSocket() {

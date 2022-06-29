@@ -53,7 +53,7 @@
                <children>
                   <AnchorPane maxHeight="30.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" styleClass="header" stylesheets="@../stylesheets/lobby.css">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headerTitle" text="Ranking" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="5.0">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headerTitle" text="Top Players" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -97,11 +97,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button minHeight="50.0" minWidth="140.0" mnemonicParsing="false" text="Start Game" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
-               <GridPane.margin>
-                  <Insets right="25.0" />
-               </GridPane.margin>
-            </Button>
             <Button fx:id="logoutButton" maxHeight="1.7976931348623157E308" maxWidth="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#logout" prefWidth="60.0" styleClass="menuButton">
                <cursor>
                   <Cursor fx:constant="HAND" />

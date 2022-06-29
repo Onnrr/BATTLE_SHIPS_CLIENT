@@ -61,7 +61,7 @@
               </rowConstraints>
                <children>
                   <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="User Name" styleClass="textfield" stylesheets="@../stylesheets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Password" styleClass="t" stylesheets="@../stylesheets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#login" promptText="Password" styleClass="t" stylesheets="@../stylesheets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Button maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#login" styleClass="loginButton" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="10.0" />

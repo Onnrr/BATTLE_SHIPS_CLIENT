@@ -103,6 +103,9 @@ public class LoginController implements Initializable {
             System.out.println("player created");
             String online = in.readLine();
             p.setOnlinePlayers(online);
+
+            String rank = in.readLine();
+            p.setRank(rank);
             AppManager.changeScene(getClass().getResource("/views/lobby.fxml"), e, p);
         } else {
             System.out.println(message);

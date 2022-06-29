@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 public class Notification extends AnchorPane {
     Text header;
     Text message;
+    Text rank;
     InviteButton acceptButton;
     InviteButton declineButton;
 
@@ -80,6 +81,30 @@ public class Notification extends AnchorPane {
         AnchorPane.setLeftAnchor(message, 10.0);
 
         this.getChildren().addAll(header, message);
+    }
+
+    public Notification(int rank, String headerString, String messageString) {
+        this.setMaxHeight(Double.MAX_VALUE);
+        this.setMaxWidth(Double.MAX_VALUE);
+        this.setMinHeight(95);
+        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
+        this.getStyleClass().add("notification");
+
+        header = new Text(headerString);
+        header.getStyleClass().add("onlineUserName");
+        message = new Text(messageString);
+        this.rank = new Text(String.valueOf(rank));
+
+        AnchorPane.setTopAnchor(header, 5.0);
+        AnchorPane.setLeftAnchor(header, 20.0);
+
+        AnchorPane.setTopAnchor(message, 35.0);
+        AnchorPane.setLeftAnchor(message, 20.0);
+
+        AnchorPane.setTopAnchor(this.rank, 10.0);
+        AnchorPane.setLeftAnchor(this.rank, 10.0);
+
+        this.getChildren().addAll(header, message, this.rank);
     }
 
     public int getID() {

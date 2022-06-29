@@ -126,6 +126,15 @@ public class LobbyController implements Initialise, Runnable {
             onlinePlayers.getChildren().add(cur);
         }
 
+        result = p.getRank().split(" ");
+        int rank = 1;
+        for (int i = 1; i < result.length - 1; i += 2) {
+            // TODO make new constructor
+            Notification not = new Notification(rank, result[i], "Score : " + result[i + 1]);
+            rankingBox.getChildren().add(not);
+            rank++;
+        }
+
         homeButton.getStyleClass().remove("menuButton");
         homeButton.getStyleClass().add("selected");
     }
