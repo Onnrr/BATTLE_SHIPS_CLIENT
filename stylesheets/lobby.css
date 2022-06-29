@@ -47,3 +47,54 @@
     -fx-font-weight: bold;
     -fx-font-size: 20;
 }
+
+.settings {
+    -fx-background-color: GRAY;
+}
+
+.logoutButton {
+    -fx-background-color: #505050;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.logoutButton:hover {
+    -fx-background-color: #414141;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.deleteButton {
+    -fx-background-color: #7e0505;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.deleteButton:hover {
+    -fx-background-color: #720505;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.selected {
+    -fx-background-color: GRAY;
+}
+
+.selected:hover {
+    -fx-background-color: GRAY;
+}
+
+.settingsTitle {
+    -fx-fill: white;
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+}
+
+.settingsText {
+    -fx-fill: white;
+    -fx-font-size: 18;
+}

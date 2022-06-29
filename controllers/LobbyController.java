@@ -2,30 +2,39 @@ package controllers;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 import javafx.application.Platform;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 import models.Initialise;
 import models.InviteButton;
 import models.Notification;
 import models.OnlinePlayer;
 import models.Player;
+import models.Settings;
 
 public class LobbyController implements Initialise, Runnable {
     final String CONNECTED = "CONNECTED";
     final String DISCONNECTED = "DISCONNECTED";
     final String DECLINE_GAME = "decline_game";
     final String INVITE = "invite";
+    final String DISCONNECT = "disconnect";
     final String INVITATION = "INVITATION";
     final String DECLINED = "DECLINED";
 
@@ -53,6 +62,11 @@ public class LobbyController implements Initialise, Runnable {
     @FXML
     FlowPane onlinePlayers;
 
+    @FXML
+    GridPane root;
+
+    Settings settings;
+
     Socket s;
     Thread t;
     Player p;
@@ -67,6 +81,8 @@ public class LobbyController implements Initialise, Runnable {
         System.out.println(p.getOnlinePlayers());
         start();
         notificationsBox.getChildren().clear();
+
+        settings = new Settings(player);
 
         ImageView home = new ImageView();
         ImageView logout = new ImageView();
@@ -109,6 +125,9 @@ public class LobbyController implements Initialise, Runnable {
             inviteButton.setRoot(cur);
             onlinePlayers.getChildren().add(cur);
         }
+
+        homeButton.getStyleClass().remove("menuButton");
+        homeButton.getStyleClass().add("selected");
     }
 
     public void invite(MouseEvent event) {
@@ -187,6 +206,7 @@ public class LobbyController implements Initialise, Runnable {
                 }
             });
         } else if (result[0].equals(DECLINED)) {
+            // TODO bug fix deletes any notification not spesifically the pending invite
             // Just deletes the declined pending invite
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
@@ -229,6 +249,50 @@ public class LobbyController implements Initialise, Runnable {
             t = new Thread(this, "listen");
             t.start();
         }
+    }
+
+    public void toHome(ActionEvent e) {
+        settingsButton.setDisable(false);
+        settingsButton.getStyleClass().add("menuButton");
+        settingsButton.getStyleClass().remove("selected");
+        homeButton.getStyleClass().remove("menuButton");
+        homeButton.getStyleClass().add("selected");
+        root.getChildren().remove(settings);
+        root.add(onlinePlayers, 1, 0);
+    }
+
+    public void toSettings(ActionEvent e) {
+        homeButton.setDisable(false);
+        homeButton.getStyleClass().add("menuButton");
+        homeButton.getStyleClass().remove("selected");
+        settingsButton.getStyleClass().remove("menuButton");
+        settingsButton.getStyleClass().add("selected");
+        root.getChildren().remove(onlinePlayers);
+        root.add(settings, 1, 0);
+    }
+
+    public void toChat(ActionEvent e) {
+        // TODO
+    }
+
+    public void logout(ActionEvent e) {
+        p.sendMessage(DISCONNECT);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/views/login.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Parent p = loader.getRoot();
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(p, ((Node) e.getSource()).getScene().getWidth(),
+                ((Node) e.getSource()).getScene().getHeight());
+
+        stage.setHeight(stage.getHeight() + 0.0001);
+
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

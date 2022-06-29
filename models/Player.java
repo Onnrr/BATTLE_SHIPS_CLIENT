@@ -62,6 +62,14 @@ public class Player {
         return id;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
     public String getMessage() {
         try {
             return in.readLine();
