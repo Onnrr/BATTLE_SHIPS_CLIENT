@@ -32,7 +32,10 @@ import models.Settings;
 public class LobbyController implements Initialise, Runnable {
     final String CONNECTED = "CONNECTED";
     final String DISCONNECTED = "DISCONNECTED";
+    final String GAME_FAIL = "GAME_FAIL";
+    final String GAME_START = "GAME_START";
     final String DECLINE_GAME = "decline_game";
+    final String ACCEPT_GAME = "accept_game";
     final String INVITE = "invite";
     final String DISCONNECT = "disconnect";
     final String INVITATION = "INVITATION";
@@ -210,6 +213,10 @@ public class LobbyController implements Initialise, Runnable {
                     decline.setOnMouseClicked(e -> {
                         declineNotification(e);
                     });
+
+                    accept.setOnMouseClicked(e -> {
+                        acceptNotification(e);
+                    });
                     notificationsBox.getChildren().add(newNot);
                     System.out.println(notificationsBox.getChildren().size());
                 }
@@ -226,7 +233,6 @@ public class LobbyController implements Initialise, Runnable {
                         @Override
                         public void run() {
                             notificationsBox.getChildren().remove(notificationsBox.getChildren().get(index));
-                            System.out.println(notificationsBox.getChildren().size());
                             for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
                                 if (((OnlinePlayer) onlinePlayers.getChildren().get(i)).getID() == otherID) {
                                     ((OnlinePlayer) onlinePlayers.getChildren().get(i)).getInviteButton()
@@ -237,6 +243,28 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
+        } else if (result[0].equals(GAME_FAIL)) {
+            // TODO
+            System.out.println("Other player is not available");
+        } else if (result[0].equals(GAME_START)) {
+            // TODO
+            p.settOpponentID(Integer.parseInt(result[1]));
+            System.out.println("Game starting with " + p.getOpponentID());
+
+            int otherID = Integer.parseInt(result[1]);
+            for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
+                Notification cur = (Notification) notificationsBox.getChildren().get(i);
+                if (cur.getID() == otherID) {
+                    final Integer index = Integer.valueOf(i);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            notificationsBox.getChildren().remove(notificationsBox.getChildren().get(index));
+                        }
+                    });
+                }
+            }
+
         } else {
             System.out.println(message);
         }
@@ -250,6 +278,16 @@ public class LobbyController implements Initialise, Runnable {
             }
         });
         p.sendMessage(DECLINE_GAME + " " + p.getID() + " " + ((InviteButton) event.getSource()).getID());
+    }
+
+    private void acceptNotification(MouseEvent event) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                notificationsBox.getChildren().remove(((InviteButton) event.getSource()).getRoot());
+            }
+        });
+        p.sendMessage(ACCEPT_GAME + " " + p.getID() + " " + ((InviteButton) event.getSource()).getID());
     }
 
     public void start() {
