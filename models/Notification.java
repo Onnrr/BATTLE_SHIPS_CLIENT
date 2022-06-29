@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 
 public class Notification extends AnchorPane {
     Text header;
-    Text message;
+    public Text message;
     Text rank;
     InviteButton acceptButton;
     InviteButton declineButton;

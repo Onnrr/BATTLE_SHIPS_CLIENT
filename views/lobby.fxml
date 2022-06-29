@@ -109,7 +109,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="chatButton" maxHeight="1.7976931348623157E308" maxWidth="60.0" minWidth="60.0" mnemonicParsing="false" prefWidth="60.0" styleClass="menuButton">
+                  <Button fx:id="chatButton" maxHeight="1.7976931348623157E308" maxWidth="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#toChat" prefWidth="60.0" styleClass="menuButton">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

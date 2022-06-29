@@ -52,6 +52,10 @@
     -fx-background-color: GRAY;
 }
 
+.chat {
+    -fx-background-color: GRAY;
+}
+
 .logoutButton {
     -fx-background-color: #505050;
     -fx-font-size: 18;
@@ -97,4 +101,50 @@
 .settingsText {
     -fx-fill: white;
     -fx-font-size: 18;
+}
+
+.text-field {
+    -fx-background-color: #414346;
+    -fx-font-size: 18;
+    -fx-border-width: 0 0 2 2;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.text-field:hover {
+    -fx-background-color: #383a3d;
+    -fx-border-width: 0 0 3 2;
+    -fx-font-size: 19;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.text-field:focused {
+    -fx-background-color: #383a3d;
+    -fx-border-width: 0 0 3 2;
+    -fx-font-size: 19;
+    -fx-border-color: #1c034c;
+    -fx-text-fill: white;
+}
+
+.send {
+    -fx-background-color: #34068a;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.send:hover {
+    -fx-background-color: #30057e;
+    -fx-font-size: 18;
+    -fx-font-weight: 1.1;
+    -fx-text-fill: white;
+}
+
+.icon {
+    -fx-fill: white;
+}
+
+.aa {
+    -fx-background-color: #30057e;
 }

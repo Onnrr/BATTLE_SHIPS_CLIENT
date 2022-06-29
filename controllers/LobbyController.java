@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import models.Chat;
 import models.Initialise;
 import models.InviteButton;
 import models.Notification;
@@ -69,6 +70,7 @@ public class LobbyController implements Initialise, Runnable {
     GridPane root;
 
     Settings settings;
+    Chat chat;
 
     Socket s;
     Thread t;
@@ -86,6 +88,7 @@ public class LobbyController implements Initialise, Runnable {
         notificationsBox.getChildren().clear();
 
         settings = new Settings(player);
+        chat = new Chat(player);
 
         ImageView home = new ImageView();
         ImageView logout = new ImageView();
@@ -132,7 +135,6 @@ public class LobbyController implements Initialise, Runnable {
         result = p.getRank().split(" ");
         int rank = 1;
         for (int i = 1; i < result.length - 1; i += 2) {
-            // TODO make new constructor
             Notification not = new Notification(rank, result[i], "Score : " + result[i + 1]);
             rankingBox.getChildren().add(not);
             rank++;
@@ -199,6 +201,7 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
+            // Removes notifications of the disconnected player
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
                 Notification cur = (Notification) notificationsBox.getChildren().get(i);
@@ -314,27 +317,44 @@ public class LobbyController implements Initialise, Runnable {
     }
 
     public void toHome(ActionEvent e) {
-        settingsButton.setDisable(false);
         settingsButton.getStyleClass().add("menuButton");
         settingsButton.getStyleClass().remove("selected");
+
+        chatButton.getStyleClass().add("menuButton");
+        chatButton.getStyleClass().remove("selected");
         homeButton.getStyleClass().remove("menuButton");
         homeButton.getStyleClass().add("selected");
+        root.getChildren().remove(chat);
         root.getChildren().remove(settings);
         root.add(onlinePlayers, 1, 0);
     }
 
     public void toSettings(ActionEvent e) {
-        homeButton.setDisable(false);
         homeButton.getStyleClass().add("menuButton");
         homeButton.getStyleClass().remove("selected");
+
+        chatButton.getStyleClass().add("menuButton");
+        chatButton.getStyleClass().remove("selected");
+
         settingsButton.getStyleClass().remove("menuButton");
         settingsButton.getStyleClass().add("selected");
+        root.getChildren().remove(chat);
         root.getChildren().remove(onlinePlayers);
         root.add(settings, 1, 0);
     }
 
     public void toChat(ActionEvent e) {
-        // TODO
+        settingsButton.getStyleClass().add("menuButton");
+        settingsButton.getStyleClass().remove("selected");
+
+        homeButton.getStyleClass().add("menuButton");
+        homeButton.getStyleClass().remove("selected");
+
+        chatButton.getStyleClass().remove("menuButton");
+        chatButton.getStyleClass().add("selected");
+        root.getChildren().remove(onlinePlayers);
+        root.getChildren().remove(settings);
+        root.add(chat, 1, 0);
     }
 
     public void logout(ActionEvent e) {
