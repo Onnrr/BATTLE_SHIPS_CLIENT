@@ -68,7 +68,7 @@ public class LoginController implements Initializable {
             return;
         }
         try {
-            s = new Socket("localhost", 9999);
+            s = new Socket("10.16.17.37", 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {

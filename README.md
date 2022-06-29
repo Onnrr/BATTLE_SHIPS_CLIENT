@@ -5,7 +5,7 @@
 * Login Check -> "login [userName] [password]"
 
 ## Output formats
-* Failed login or signup -> "FAIL" **
+* Failed login or signup -> "FAIL"
 * Failed login -> "MAIL"
 * Failed login -> "NAME"
 * Successful login or signup -> "SUCCES"

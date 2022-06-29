@@ -189,7 +189,7 @@ public class LobbyController implements Initialise, Runnable {
         } else if (result[0].equals(DISCONNECTED)) {
             // Removes the disconnected player from the list
             for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
-                if (result[1].equals(((OnlinePlayer) onlinePlayers.getChildren().get(i)).getName())) {
+                if (result[2].equals(((OnlinePlayer) onlinePlayers.getChildren().get(i)).getName())) {
                     final Integer index = Integer.valueOf(i);
                     Platform.runLater(new Runnable() {
                         @Override
@@ -199,6 +199,20 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
+            int otherID = Integer.parseInt(result[1]);
+            for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
+                Notification cur = (Notification) notificationsBox.getChildren().get(i);
+                if (cur.getID() == otherID) {
+                    final Integer index = Integer.valueOf(i);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            notificationsBox.getChildren().remove(notificationsBox.getChildren().get(index));
+                        }
+                    });
+                }
+            }
+
         } else if (result[0].equals(INVITATION)) {
             // Adds game invite notification
             Platform.runLater(new Runnable() {
@@ -249,7 +263,8 @@ public class LobbyController implements Initialise, Runnable {
         } else if (result[0].equals(GAME_START)) {
             // TODO
             p.settOpponentID(Integer.parseInt(result[1]));
-            System.out.println("Game starting with " + p.getOpponentID());
+            p.setOpponentName(result[2]);
+            System.out.println("Game starting with " + p.getOpponentName());
 
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {

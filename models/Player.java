@@ -12,6 +12,7 @@ public class Player {
 
     int id;
     int opponentId;
+    String opponentName;
     Socket s;
     String userName;
     String mail;
@@ -40,6 +41,7 @@ public class Player {
         this.in = in;
         this.out = out;
         opponentId = -1;
+        opponentName = "";
 
         remaining = 20;
         myTable = null;
@@ -55,6 +57,14 @@ public class Player {
 
     public int getOpponentID() {
         return opponentId;
+    }
+
+    public void setOpponentName(String opName) {
+        opponentName = opName;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
     }
 
     public String getOnlinePlayers() {
