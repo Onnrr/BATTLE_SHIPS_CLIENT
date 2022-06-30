@@ -82,9 +82,11 @@ public class LobbyController implements Initialise, Runnable {
     PrintWriter out;
     Button sendButton;
     TextField field;
+    boolean stop;
 
     @Override
     public void initialise(Player player) {
+        stop = false;
         p = player;
         s = p.getSocket();
         userName.setText(p.getName());
@@ -173,7 +175,7 @@ public class LobbyController implements Initialise, Runnable {
     @Override
     public void run() {
         String message;
-        while (true) {
+        while (!stop) {
             message = p.getMessage();
             System.out.println(message);
             try {
@@ -294,6 +296,13 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
+            stop = true;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ((Stage) root.getScene().getWindow()).close();
+                }
+            });
             AppManager.goToSetup(getClass().getResource("/views/setup.fxml"), p);
         } else if (result[0].equals(NEW_MESSAGE)) {
             message = message.replace(result[0], "");
@@ -302,7 +311,7 @@ public class LobbyController implements Initialise, Runnable {
             message = message.trim();
             chat.receiveMessage(result[2], message);
         } else {
-            System.out.println(message);
+            // System.out.println(message);
         }
     }
 

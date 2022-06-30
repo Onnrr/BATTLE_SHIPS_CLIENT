@@ -1,7 +1,10 @@
 package controllers;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +17,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import models.AppManager;
 import models.Cell;
 import models.Initialise;
 import models.Player;
@@ -61,7 +66,7 @@ public class SetupController implements Runnable, Initialise {
     public void initialise(Player player) {
         stop = false;
         p = player;
-
+        start();
         myUserName.setText(p.getName());
         opponentUserName.setText(p.getOpponentName());
 
@@ -140,23 +145,16 @@ public class SetupController implements Runnable, Initialise {
             return;
         }
         if (shipBox.getSelectionModel().getSelectedItem().equals("Boat (1 Block)")) {
-            file = new File("images/ships/1Block.jpg");
             length = 1;
         } else if (shipBox.getSelectionModel().getSelectedItem().equals("Destroyer (2 Blocks)")) {
-            file = new File("images/ships/2Block.jpg");
             length = 2;
         } else if (shipBox.getSelectionModel().getSelectedItem().equals("Cruiser (3 Blocks)")) {
-            file = new File("images/ships/3Block.jpg");
             length = 3;
         } else if (shipBox.getSelectionModel().getSelectedItem().equals("BattleShip (4 Blocks)")) {
-            file = new File("images/ships/4Block.jpg");
             length = 4;
         } else {
-            file = new File("images/ships/5Block.jpg");
             length = 5;
         }
-        Image img = new Image(file.toURI().toString());
-        image.setImage(img);
     }
 
     private void handleClick(MouseEvent e) {
@@ -194,23 +192,23 @@ public class SetupController implements Runnable, Initialise {
             shipBox.getSelectionModel().selectFirst();
             File file;
             if (shipBox.getSelectionModel().getSelectedItem().equals("Boat (1 Block)")) {
-                file = new File("images/ships/1Block.jpg");
+                // file = new File("images/ships/1Block.jpg");
                 length = 1;
             } else if (shipBox.getSelectionModel().getSelectedItem().equals("Destroyer (2 Blocks)")) {
-                file = new File("images/ships/2Block.jpg");
+                // file = new File("images/ships/2Block.jpg");
                 length = 2;
             } else if (shipBox.getSelectionModel().getSelectedItem().equals("Cruiser (3 Blocks)")) {
-                file = new File("images/ships/3Block.jpg");
+                // file = new File("images/ships/3Block.jpg");
                 length = 3;
             } else if (shipBox.getSelectionModel().getSelectedItem().equals("BattleShip (4 Blocks)")) {
-                file = new File("images/ships/4Block.jpg");
+                // file = new File("images/ships/4Block.jpg");
                 length = 4;
             } else {
-                file = new File("images/ships/5Block.jpg");
+                // file = new File("images/ships/5Block.jpg");
                 length = 5;
             }
-            Image img = new Image(file.toURI().toString());
-            image.setImage(img);
+            // Image img = new Image(file.toURI().toString());
+            // image.setImage(img);
         }
 
     }
@@ -290,17 +288,31 @@ public class SetupController implements Runnable, Initialise {
     public void run() {
         String message;
         while (!stop) {
+            System.out.println("mesajj");
             message = p.getMessage();
-            System.out.println(message);
+            // System.out.println(message);
+            System.out.println("123456789");
             execute(message);
         }
     }
 
     private void execute(String message) {
+        System.out.println("123123");
         String[] result = message.split(" ");
-        if (result[0].equals(DISCONNECTED)) {
+        if (message.equals(DISCONNECTED)) {
             System.out.println("opponent disconnected");
-            // TODO
+            // TODO send online players
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ((Stage) readyButton.getScene().getWindow()).close();
+                    try {
+                        AppManager.goToLobby(getClass().getResource("/views/lobby.fxml"), p);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } else if (result[0].equals(READY)) {
             opponentReady = true;
             System.out.println("Opponent Ready");

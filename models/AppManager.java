@@ -52,7 +52,37 @@ public class AppManager {
 
                 Stage stage = new Stage();
                 stage.setOnCloseRequest(event -> {
-                    player.sendMessage("leave");
+                    player.sendMessage("disconnect");
+                });
+
+                stage.setWidth(stage.getWidth() + 0.0001);
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
+
+    }
+
+    public static void goToLobby(URL fxmlfile, Player player) throws IOException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(fxmlfile);
+                try {
+                    loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Initialise c2 = loader.getController();
+                c2.initialise(player);
+                Parent parent = loader.getRoot();
+
+                Scene scene = new Scene(parent);
+
+                Stage stage = new Stage();
+                stage.setOnCloseRequest(event -> {
+                    player.sendMessage("disconnect");
                 });
 
                 stage.setWidth(stage.getWidth() + 0.0001);
