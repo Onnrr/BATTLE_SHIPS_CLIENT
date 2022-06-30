@@ -19,7 +19,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="background" stylesheets="@../../battleships/stylesheets/style.css">
+      <GridPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="background">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.60003662109375" minWidth="10.0" prefWidth="25.600006103515625" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="783.9999145507812" minWidth="10.0" prefWidth="538.6666625976562" />

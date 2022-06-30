@@ -288,20 +288,19 @@ public class SetupController implements Runnable, Initialise {
     public void run() {
         String message;
         while (!stop) {
-            System.out.println("mesajj");
             message = p.getMessage();
-            // System.out.println(message);
-            System.out.println("123456789");
             execute(message);
         }
     }
 
     private void execute(String message) {
-        System.out.println("123123");
         String[] result = message.split(" ");
         if (message.equals(DISCONNECTED)) {
             System.out.println("opponent disconnected");
-            // TODO send online players
+
+            String onlinePlayers = p.getMessage();
+            p.setOnlinePlayers(onlinePlayers);
+
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
