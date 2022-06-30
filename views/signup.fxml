@@ -27,7 +27,7 @@
     <RowConstraints minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane style="-fx-background-color: #4C4E52;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
@@ -65,11 +65,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="User Name" styleClass="text-field" stylesheets="@../stylesheets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="mailField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Mail Address" styleClass="text-field" stylesheets="@../stylesheets/style.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="User Name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="mailField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Mail Address" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <PasswordField fx:id="repeatPasswordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Pasword Again" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Button maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#signup" styleClass="signupButton" stylesheets="@../stylesheets/style.css" text="Sign Up" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="TOP">
+                  <Button maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#signup" styleClass="signupButton" text="Sign Up" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="10.0" />
                      </GridPane.margin>
