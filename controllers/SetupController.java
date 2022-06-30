@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -140,7 +138,7 @@ public class SetupController implements Runnable, Initialise {
     }
 
     public void shipSelect(ActionEvent e) {
-        File file;
+        // File file;
         if (shipBox.getSelectionModel().getSelectedItem() == null) {
             return;
         }
@@ -190,7 +188,7 @@ public class SetupController implements Runnable, Initialise {
             length = 0;
         } else {
             shipBox.getSelectionModel().selectFirst();
-            File file;
+            // File file;
             if (shipBox.getSelectionModel().getSelectedItem().equals("Boat (1 Block)")) {
                 // file = new File("images/ships/1Block.jpg");
                 length = 1;
@@ -291,6 +289,7 @@ public class SetupController implements Runnable, Initialise {
             message = p.getMessage();
             execute(message);
         }
+        System.out.println("Thread stopped");
     }
 
     private void execute(String message) {
@@ -300,7 +299,8 @@ public class SetupController implements Runnable, Initialise {
 
             String onlinePlayers = p.getMessage();
             p.setOnlinePlayers(onlinePlayers);
-
+            System.out.println("Got new players");
+            stop = true;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
