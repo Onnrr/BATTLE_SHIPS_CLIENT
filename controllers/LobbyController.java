@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import models.AppManager;
 import models.Chat;
 import models.Initialise;
 import models.InviteButton;
@@ -41,6 +43,7 @@ public class LobbyController implements Initialise, Runnable {
     final String DISCONNECT = "disconnect";
     final String INVITATION = "INVITATION";
     final String DECLINED = "DECLINED";
+    final String NEW_MESSAGE = "MESSAGE";
 
     @FXML
     Button logoutButton;
@@ -77,6 +80,8 @@ public class LobbyController implements Initialise, Runnable {
     Player p;
     BufferedReader in;
     PrintWriter out;
+    Button sendButton;
+    TextField field;
 
     @Override
     public void initialise(Player player) {
@@ -88,7 +93,10 @@ public class LobbyController implements Initialise, Runnable {
         notificationsBox.getChildren().clear();
 
         settings = new Settings(player);
-        chat = new Chat(player);
+
+        sendButton = new Button();
+        field = new TextField();
+        chat = new Chat(player, field, sendButton);
 
         ImageView home = new ImageView();
         ImageView logout = new ImageView();
@@ -168,11 +176,16 @@ public class LobbyController implements Initialise, Runnable {
         while (true) {
             message = p.getMessage();
             System.out.println(message);
-            execute(message);
+            try {
+                execute(message);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 
-    private void execute(String message) {
+    private void execute(String message) throws IOException {
         String[] result = message.split(" ");
         if (result[0].equals(CONNECTED)) {
             // Adds connected player to the list
@@ -240,7 +253,6 @@ public class LobbyController implements Initialise, Runnable {
             });
         } else if (result[0].equals(DECLINED)) {
             // TODO bug fix deletes any notification not spesifically the pending invite
-            // Just deletes the declined pending invite
             int otherID = Integer.parseInt(result[1]);
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
                 Notification cur = (Notification) notificationsBox.getChildren().get(i);
@@ -282,7 +294,13 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
-
+            AppManager.goToSetup(getClass().getResource("/views/setup.fxml"), p);
+        } else if (result[0].equals(NEW_MESSAGE)) {
+            message = message.replace(result[0], "");
+            message = message.replace(result[1], "");
+            message = message.replace(result[2], "");
+            message = message.trim();
+            chat.receiveMessage(result[2], message);
         } else {
             System.out.println(message);
         }

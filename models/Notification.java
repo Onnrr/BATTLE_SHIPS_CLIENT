@@ -11,6 +11,7 @@ public class Notification extends AnchorPane {
     Text header;
     public Text message;
     Text rank;
+    Text time;
     InviteButton acceptButton;
     InviteButton declineButton;
 
@@ -105,6 +106,30 @@ public class Notification extends AnchorPane {
         AnchorPane.setLeftAnchor(this.rank, 10.0);
 
         this.getChildren().addAll(header, message, this.rank);
+    }
+
+    public Notification(String userNameString, String curTime, String messageString) {
+        this.setMaxHeight(Double.MAX_VALUE);
+        this.setMaxWidth(Double.MAX_VALUE);
+        this.setMinHeight(64);
+        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
+        this.getStyleClass().add("notification");
+
+        header = new Text(userNameString);
+        header.getStyleClass().add("onlineUserName");
+        message = new Text(messageString);
+        this.time = new Text(curTime);
+
+        AnchorPane.setTopAnchor(header, 0.0);
+        AnchorPane.setLeftAnchor(header, 20.0);
+
+        AnchorPane.setBottomAnchor(message, 10.0);
+        AnchorPane.setLeftAnchor(message, 20.0);
+
+        AnchorPane.setBottomAnchor(time, 10.0);
+        AnchorPane.setRightAnchor(time, 150.0);
+
+        this.getChildren().addAll(header, message, time);
     }
 
     public int getID() {

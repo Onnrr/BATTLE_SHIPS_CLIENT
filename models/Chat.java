@@ -1,36 +1,51 @@
 package models;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 public class Chat extends AnchorPane {
-    final int MESSAGE_TO_DISPLAY = 8;
+    final String MESSAGE = "message";
+    final int MESSAGE_TO_DISPLAY = 7;
+    int numberOfMessages;
     VBox messageBox;
     TextField field;
     Button sendButton;
     Player p;
-    int numberOfMessages;
     ImageView sendImage;
+    ArrayList<Notification> messages;
 
-    public Chat(Player player) {
+    public Chat(Player player, TextField textField, Button button) {
+        p = player;
         numberOfMessages = 0;
         this.getStyleClass().add("chat");
         messageBox = new VBox();
         messageBox.getStyleClass().add("aa");
 
-        field = new TextField();
+        messages = new ArrayList<Notification>();
+
+        field = textField;
         field.setPromptText("Your message");
-        sendButton = new Button();
+        sendButton = button;
         sendButton.getStyleClass().add("send");
+
+        sendButton.setOnAction(e -> {
+            send(e);
+        });
+
+        field.setOnAction(e -> {
+            send(e);
+        });
 
         sendImage = new ImageView();
 
@@ -53,12 +68,51 @@ public class Chat extends AnchorPane {
         AnchorPane.setTopAnchor(messageBox, 10.0);
         AnchorPane.setRightAnchor(messageBox, 10.0);
         AnchorPane.setLeftAnchor(messageBox, 10.0);
-        AnchorPane.setBottomAnchor(messageBox, 100.0);
+        AnchorPane.setBottomAnchor(messageBox, 60.0);
 
-        Notification not = new Notification("asdfdsfsaf", "sdjkfhasfjadifasdfs", 0);
-
-        messageBox.getChildren().add(not);
+        // DUMMY MESSAGES
+        for (int i = 0; i < MESSAGE_TO_DISPLAY; i++) {
+            Notification not = new Notification("", "", "");
+            not.setVisible(false);
+            messages.add(not);
+            messageBox.getChildren().add(not);
+        }
 
         this.getChildren().addAll(messageBox, field, sendButton);
+    }
+
+    private void send(ActionEvent e) {
+        if (field.getText().equals("")) {
+            return;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("HH.mm");
+        Date date = new Date(System.currentTimeMillis());
+
+        messageBox.getChildren().remove(messages.get(0));
+        messages.remove(0);
+        Notification newMessage = new Notification(p.getName(), formatter.format(date), field.getText());
+        messages.add(newMessage);
+        messageBox.getChildren().add(newMessage);
+
+        p.sendMessage(MESSAGE + " " + field.getText());
+
+        field.clear();
+    }
+
+    public void receiveMessage(String sender, String message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                SimpleDateFormat formatter = new SimpleDateFormat("HH.mm");
+                Date date = new Date(System.currentTimeMillis());
+
+                messageBox.getChildren().remove(messages.get(0));
+                messages.remove(0);
+                Notification newMessage = new Notification(sender, formatter.format(date), message);
+                messages.add(newMessage);
+                messageBox.getChildren().add(newMessage);
+            }
+        });
+
     }
 }
