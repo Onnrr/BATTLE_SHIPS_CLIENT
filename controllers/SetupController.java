@@ -18,13 +18,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.AppManager;
 import models.Cell;
+import models.Counter;
 import models.Initialise;
 import models.Player;
 
 public class SetupController implements Runnable, Initialise {
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
     final String READY = "OPPONENT_READY";
+    final String LEAVE = "leave";
+    final String CAN_LEAVE = "LEAVE";
     final int TABLE_SIZE = 10;
+    final int SETUP_TIME = 60;
     int length;
     boolean isVertical;
     Cell[][] buttons;
@@ -51,6 +55,9 @@ public class SetupController implements Runnable, Initialise {
     @FXML
     Text opponentUserName;
 
+    @FXML
+    Text counterText;
+
     GridPane table;
 
     boolean noAction;
@@ -67,6 +74,9 @@ public class SetupController implements Runnable, Initialise {
         start();
         myUserName.setText(p.getName());
         opponentUserName.setText(p.getOpponentName());
+
+        Counter counter = new Counter(SETUP_TIME, counterText);
+        counter.start();
 
         shipBox.getItems().addAll("Boat (1 Block)", "Destroyer (2 Blocks)", "Destroyer (2 Blocks)",
                 "Cruiser (3 Blocks)", "Cruiser (3 Blocks)", "BattleShip (4 Blocks)", "Carrier (5 Blocks)");
@@ -316,6 +326,25 @@ public class SetupController implements Runnable, Initialise {
             opponentReady = true;
             System.out.println("Opponent Ready");
             // TODO
+        } else if (result[0].equals(CAN_LEAVE)) {
+            String onlinePlayers = p.getMessage();
+            System.out.println("Got message " + onlinePlayers);
+            p.setOnlinePlayers(onlinePlayers);
+            System.out.println("Got new players");
+            stop = true;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    ((Stage) readyButton.getScene().getWindow()).close();
+                    try {
+                        AppManager.goToLobby(getClass().getResource("/views/lobby.fxml"), p);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } else {
+            System.out.println(message);
         }
     }
 
@@ -325,6 +354,11 @@ public class SetupController implements Runnable, Initialise {
             t = new Thread(this, "listen");
             t.start();
         }
+    }
+
+    public void leave(ActionEvent e) {
+        System.out.println("leavingg");
+        p.sendMessage(LEAVE);
     }
 
 }

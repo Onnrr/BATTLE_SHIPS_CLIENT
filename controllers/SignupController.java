@@ -86,7 +86,7 @@ public class SignupController implements Initializable {
 
     public void signup(ActionEvent e) {
         try {
-            s = new Socket("192.168.1.80", 9999);
+            s = new Socket("localhost", 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {

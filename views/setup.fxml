@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -51,6 +52,11 @@
                         <Font size="33.0" />
                      </font>
                   </Button>
+                  <Hyperlink layoutX="186.0" layoutY="459.0" onAction="#leave" text="Leave Game">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
                </children>
             </AnchorPane>
             <Button mnemonicParsing="false" onAction="#reset" text="Reset" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
@@ -82,7 +88,7 @@
                   <Insets left="30.0" top="40.0" />
                </GridPane.margin>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="45" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+            <Text fx:id="counterText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="45" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                <font>
                   <Font size="36.0" />
                </font>

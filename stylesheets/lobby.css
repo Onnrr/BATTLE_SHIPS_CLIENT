@@ -55,8 +55,6 @@
 }
 
 .onlineUserName {
-    -fx-font-weight: bold;
-    font-weight: bold;
     -fx-font-size: 20;
     font-size: 20;
 }
@@ -76,8 +74,6 @@
     background-color: #505050;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -86,8 +82,6 @@
     background-color: #414141;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -96,8 +90,6 @@
     background-color: #7e0505;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -106,8 +98,6 @@
     background-color: #720505;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -126,8 +116,6 @@
     fill: white;
     -fx-font-size: 28;
     font-size: 28;
-    -fx-font-weight: bold;
-    font-weight: bold;
 }
 
 .settingsText {
@@ -178,8 +166,6 @@
     background-color: #34068a;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -188,8 +174,6 @@
     background-color: #30057e;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
