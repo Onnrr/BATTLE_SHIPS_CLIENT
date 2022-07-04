@@ -181,7 +181,6 @@ public class LobbyController implements Initialise, Runnable {
             try {
                 execute(message);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -287,11 +286,10 @@ public class LobbyController implements Initialise, Runnable {
             for (int i = 0; i < notificationsBox.getChildren().size(); i++) {
                 Notification cur = (Notification) notificationsBox.getChildren().get(i);
                 if (cur.getID() == otherID) {
-                    final Integer index = Integer.valueOf(i);
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            notificationsBox.getChildren().remove(notificationsBox.getChildren().get(index));
+                            notificationsBox.getChildren().remove(cur);
                         }
                     });
                 }

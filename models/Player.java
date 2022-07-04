@@ -21,12 +21,13 @@ public class Player {
     String onlinePlayers;
     String rank;
 
+    int numberOfCorrectGuesses;
+    int remaining;
+
     BufferedReader in;
     PrintWriter out;
 
     int[][] myTable;
-
-    int remaining;
 
     public Player(Socket socket, BufferedReader in, PrintWriter out, int id, String userName, int score, String mail,
             Image img) {
@@ -43,7 +44,7 @@ public class Player {
         opponentId = -1;
         opponentName = "";
 
-        remaining = 20;
+        remaining = SHIPS;
         myTable = new int[TABLE_SIZE][TABLE_SIZE];
     }
 
@@ -118,5 +119,21 @@ public class Player {
 
     public void resetTable() {
         myTable = new int[TABLE_SIZE][TABLE_SIZE];
+    }
+
+    public void decrRemaining() {
+        remaining--;
+    }
+
+    public int getOppRemaining() {
+        return SHIPS - numberOfCorrectGuesses;
+    }
+
+    public void incrementCorrectGuess() {
+        numberOfCorrectGuesses++;
+    }
+
+    public int getRemaining() {
+        return remaining;
     }
 }

@@ -336,7 +336,11 @@ public class SetupController implements Runnable, Initialise {
         p.sendMessage(READY);
         if (opponentReady) {
             stop = true;
-            // Go to game
+            try {
+                AppManager.goToGame(getClass().getResource("/views/gameplay.fxml"), myUserName, p);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
 
     }
@@ -382,7 +386,7 @@ public class SetupController implements Runnable, Initialise {
             });
             if (ready) {
                 stop = true;
-                // TODO go to game
+                AppManager.changeScene(getClass().getResource("/views/gameplay.fxml"), myUserName, p);
             }
         } else if (result[0].equals(CAN_LEAVE)) {
             String onlinePlayers = p.getMessage();
