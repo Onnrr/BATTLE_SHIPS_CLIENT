@@ -32,6 +32,26 @@ public class AppManager {
         stage.show();
     }
 
+    public static void changeScene(URL fxmlfile, Node node, Player player) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(fxmlfile);
+        loader.load();
+        Initialise c2 = loader.getController();
+        c2.initialise(player);
+        Parent p = loader.getRoot();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Scene scene = new Scene(p, node.getScene().getWidth(),
+                node.getScene().getHeight());
+
+        ((Stage) node.getScene().getWindow()).setOnCloseRequest(event -> {
+            player.sendMessage("disconnect");
+        });
+
+        stage.setWidth(stage.getWidth() + 0.0001);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void goToSetup(URL fxmlfile, Player player) throws IOException {
         Platform.runLater(new Runnable() {
             @Override
@@ -41,7 +61,6 @@ public class AppManager {
                 try {
                     loader.load();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 Initialise c2 = loader.getController();

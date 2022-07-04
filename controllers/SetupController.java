@@ -24,7 +24,8 @@ import models.Player;
 
 public class SetupController implements Runnable, Initialise {
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
-    final String READY = "OPPONENT_READY";
+    final String OPPONENT_READY = "OPPONENT_READY";
+    final String READY = "ready";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";
     final int TABLE_SIZE = 10;
@@ -64,8 +65,10 @@ public class SetupController implements Runnable, Initialise {
 
     boolean stop;
     boolean opponentReady;
+    boolean ready;
     Player p;
     Thread t;
+    Counter counter;
 
     @Override
     public void initialise(Player player) {
@@ -75,7 +78,7 @@ public class SetupController implements Runnable, Initialise {
         myUserName.setText(p.getName());
         opponentUserName.setText(p.getOpponentName());
 
-        Counter counter = new Counter(SETUP_TIME, counterText);
+        counter = new Counter(SETUP_TIME, counterText, p);
         counter.start();
 
         shipBox.getItems().addAll("Boat (1 Block)", "Destroyer (2 Blocks)", "Destroyer (2 Blocks)",
@@ -97,6 +100,7 @@ public class SetupController implements Runnable, Initialise {
 
         noAction = false;
         opponentReady = false;
+        ready = false;
 
         setUpGrid(p);
     }
@@ -287,9 +291,54 @@ public class SetupController implements Runnable, Initialise {
     }
 
     public void reset(ActionEvent e) {
+        background.getChildren().remove(1, 1);
+        table.getChildren().clear();
+        shipBox.getItems().clear();
+        directionBox.getItems().clear();
+
+        shipBox.getItems().addAll("Boat (1 Block)", "Destroyer (2 Blocks)", "Destroyer (2 Blocks)",
+                "Cruiser (3 Blocks)", "Cruiser (3 Blocks)", "BattleShip (4 Blocks)", "Carrier (5 Blocks)");
+        directionBox.getItems().addAll("Vertical", "Horizontal");
+
+        shipBox.getSelectionModel().selectFirst();
+        directionBox.getSelectionModel().selectFirst();
+
+        isVertical = true;
+        length = 1;
+
+        buttons = new Cell[TABLE_SIZE][TABLE_SIZE];
+        readyButton.setDisable(true);
+        setUpGrid(player);
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            for (int j = 0; j < TABLE_SIZE; j++) {
+                buttons[i][j].setOccupied(false);
+                buttons[i][j].getStyleClass().remove("occupied");
+            }
+        }
     }
 
     public void ready(ActionEvent e) {
+        counter.stop();
+        counterText.setVisible(false);
+        myUserName.setText(p.getName() + " READY");
+
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            for (int j = 0; j < TABLE_SIZE; j++) {
+                if (buttons[i][j].isOccupied()) {
+                    p.getMyTable()[i][j] = 1;
+                } else {
+                    p.getMyTable()[i][j] = 0;
+                }
+            }
+        }
+
+        ready = true;
+        p.sendMessage(READY);
+        if (opponentReady) {
+            stop = true;
+            // Go to game
+        }
+
     }
 
     @Override
@@ -322,16 +371,26 @@ public class SetupController implements Runnable, Initialise {
                     }
                 }
             });
-        } else if (result[0].equals(READY)) {
+        } else if (result[0].equals(OPPONENT_READY)) {
             opponentReady = true;
             System.out.println("Opponent Ready");
-            // TODO
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    opponentUserName.setText(p.getOpponentName() + " READY");
+                }
+            });
+            if (ready) {
+                stop = true;
+                // TODO go to game
+            }
         } else if (result[0].equals(CAN_LEAVE)) {
             String onlinePlayers = p.getMessage();
             System.out.println("Got message " + onlinePlayers);
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            counter.stop();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -358,6 +417,7 @@ public class SetupController implements Runnable, Initialise {
 
     public void leave(ActionEvent e) {
         System.out.println("leavingg");
+        counter.stop();
         p.sendMessage(LEAVE);
     }
 

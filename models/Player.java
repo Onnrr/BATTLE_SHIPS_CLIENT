@@ -44,7 +44,7 @@ public class Player {
         opponentName = "";
 
         remaining = 20;
-        myTable = null;
+        myTable = new int[TABLE_SIZE][TABLE_SIZE];
     }
 
     public void setOnlinePlayers(String online) {
@@ -110,5 +110,13 @@ public class Player {
 
     public void sendMessage(String message) {
         out.println(message);
+    }
+
+    public int[][] getMyTable() {
+        return myTable;
+    }
+
+    public void resetTable() {
+        myTable = new int[TABLE_SIZE][TABLE_SIZE];
     }
 }

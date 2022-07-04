@@ -4,18 +4,23 @@ import javafx.application.Platform;
 import javafx.scene.text.Text;
 
 public class Counter implements Runnable {
+    final String LEAVE = "leave";
     int seconds;
     Text text;
     Thread t;
+    Player p;
+    boolean stop;
 
-    public Counter(int time, Text txt) {
+    public Counter(int time, Text txt, Player player) {
         seconds = time;
         text = txt;
+        p = player;
+        stop = false;
     }
 
     @Override
     public void run() {
-        while (seconds > 0) {
+        while (seconds > 0 && !stop) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -28,8 +33,15 @@ public class Counter implements Runnable {
                 e.printStackTrace();
             }
             seconds--;
+            if (seconds == 0) {
+                p.sendMessage(LEAVE);
+            }
         }
 
+    }
+
+    public void stop() {
+        stop = true;
     }
 
     public void start() {

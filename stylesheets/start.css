@@ -56,8 +56,6 @@
     background-color: #34068a;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -66,8 +64,6 @@
     background-color: #30057e;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -76,8 +72,6 @@
     background-color: #34068a;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
@@ -86,15 +80,11 @@
     background-color: #30057e;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-font-weight: 1.1;
-    font-weight: 1.1;
     -fx-text-fill: white;
 }
 
 .hyperlink {
     -fx-text-fill: #c3a2ff;
-    -fx-font-weight: bold;
-    font-weight: bold;
     -fx-underline: false;
     -fx-font-size: 14;
     font-size: 14;
@@ -102,8 +92,6 @@
 
 .hyperlink:hover {
     -fx-text-fill: rgb(138, 105, 199);
-    -fx-font-weight: bold;
-    font-weight: bold;
     -fx-underline: true;
     -fx-font-size: 14;
     font-size: 14;
@@ -121,9 +109,6 @@
     background-color: #172500;
     -fx-fill: rgb(170, 23, 23);
     fill: rgb(170, 23, 23);
-
-    -fx-font-weight: bold;
-    font-weight: bold;
     -fx-font-size: 18;
     font-size: 18;
 }
