@@ -24,6 +24,8 @@ public class Player {
     int numberOfCorrectGuesses;
     int remaining;
 
+    boolean myTurn;
+
     BufferedReader in;
     PrintWriter out;
 
@@ -44,8 +46,18 @@ public class Player {
         opponentId = -1;
         opponentName = "";
 
+        myTurn = false;
+
         remaining = SHIPS;
         myTable = new int[TABLE_SIZE][TABLE_SIZE];
+    }
+
+    public void setMyTurn(boolean turn) {
+        myTurn = turn;
+    }
+
+    public boolean isMyTurn() {
+        return myTurn;
     }
 
     public void setOnlinePlayers(String online) {

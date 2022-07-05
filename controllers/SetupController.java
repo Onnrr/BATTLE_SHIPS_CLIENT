@@ -28,6 +28,7 @@ public class SetupController implements Runnable, Initialise {
     final String READY = "ready";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";
+    final String TO_GAME = "to_game";
     final int TABLE_SIZE = 10;
     final int SETUP_TIME = 60;
     int length;
@@ -336,13 +337,14 @@ public class SetupController implements Runnable, Initialise {
         p.sendMessage(READY);
         if (opponentReady) {
             stop = true;
+            p.sendMessage(TO_GAME);
+            p.setMyTurn(false);
             try {
                 AppManager.goToGame(getClass().getResource("/views/gameplay.fxml"), myUserName, p);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
-
     }
 
     @Override
@@ -386,6 +388,8 @@ public class SetupController implements Runnable, Initialise {
             });
             if (ready) {
                 stop = true;
+                p.sendMessage(TO_GAME);
+                p.setMyTurn(true);
                 AppManager.changeScene(getClass().getResource("/views/gameplay.fxml"), myUserName, p);
             }
         } else if (result[0].equals(CAN_LEAVE)) {

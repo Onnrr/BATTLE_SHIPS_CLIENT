@@ -21,6 +21,12 @@ public class GameplayController implements Initialise, Runnable {
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";
+    final String GUESS = "guess";
+    final String OPPONENT_GUESS = "GUESS";
+    final String HIT = "hit";
+    final String MISS = "miss";
+    final String CORRECT_GUESS = "HIT";
+    final String INCORRECT_GUESS = "MISS";
 
     @FXML
     GridPane rightGrid;
@@ -43,21 +49,32 @@ public class GameplayController implements Initialise, Runnable {
     GridPane opponentTable;
     GridPane myTable;
     Cell[][] buttons;
+    Cell[][] myButtons;
     Player p;
     Thread t;
     boolean stop;
+    int lastGuessColumn;
+    int lastGuessRow;
 
     @Override
     public void initialise(Player player) {
+        lastGuessColumn = -1;
+        lastGuessRow = -1;
         stop = false;
+        start();
         p = player;
         remShipsText.setText("Remaining Ships : " + p.getRemaining());
         oppShipsText.setText("Opponent's remaining ships : " + p.getOppRemaining());
         buttons = new Cell[TABLE_SIZE][TABLE_SIZE];
+        myButtons = new Cell[TABLE_SIZE][TABLE_SIZE];
 
+        if (p.isMyTurn()) {
+            turnText.setText("Your Turn");
+        } else {
+            turnText.setText(p.getOpponentName() + "'s Turn");
+        }
         setUpGrid(p);
 
-        // TODO Turn text
     }
 
     public void setUpGrid(Player p) {
@@ -114,24 +131,31 @@ public class GameplayController implements Initialise, Runnable {
                 b.setDisable(true);
 
                 if (p.getMyTable()[x][y] == 1) {
+                    b.setOccupied(true);
                     b.getStyleClass().add("occupied");
                 }
                 myTable.add(b, y, x);
+                myButtons[x][y] = b;
             }
         }
 
     }
 
     private void handleClick(MouseEvent e) throws IOException {
-        int row = ((Cell) e.getSource()).getRow();
-        int column = ((Cell) e.getSource()).getColumn();
+        if (!p.isMyTurn()) {
+            return;
+        }
+        lastGuessRow = ((Cell) e.getSource()).getRow();
+        lastGuessColumn = ((Cell) e.getSource()).getColumn();
 
-        String guess = String.valueOf(row);
-        guess += column;
+        String guess = String.valueOf(lastGuessRow);
+        guess += " " + lastGuessColumn;
         System.out.println(guess);
-        // p.sendMessage(guess);
+        p.sendMessage(GUESS + " " + guess);
 
-        // TODO
+        p.setMyTurn(false);
+        turnText.setText(p.getOpponentName() + "'s Turn");
+
     }
 
     @Override
@@ -146,6 +170,10 @@ public class GameplayController implements Initialise, Runnable {
 
     public void execute(String message) {
         String[] result = message.split(" ");
+        System.out.println(message);
+        if (message.length() < 1) {
+            return;
+        }
         if (message.equals(DISCONNECTED)) {
             System.out.println("opponent disconnected");
 
@@ -182,6 +210,37 @@ public class GameplayController implements Initialise, Runnable {
                     }
                 }
             });
+        } else if (result[0].equals(OPPONENT_GUESS)) {
+            int row = Integer.parseInt(result[1]);
+            int column = Integer.parseInt(result[2]);
+            if (myButtons[row][column].isOccupied()) {
+                p.sendMessage(HIT);
+                myButtons[row][column].getStyleClass().add("hit");
+                // TODO update remainings
+                // Check if game ended
+            } else {
+                p.sendMessage(MISS);
+                myButtons[row][column].getStyleClass().add("miss");
+            }
+            p.setMyTurn(true);
+            turnText.setText("Your Turn");
+        } else if (result[0].equals(CORRECT_GUESS)) {
+            buttons[lastGuessRow][lastGuessColumn].setDisable(true);
+            buttons[lastGuessRow][lastGuessColumn].getStyleClass().add("hit");
+            // TODO update remainings
+            // Check if game ended
+        } else if (result[0].equals(INCORRECT_GUESS)) {
+            buttons[lastGuessRow][lastGuessColumn].setDisable(true);
+        } else {
+            System.out.println(message);
+        }
+    }
+
+    public void start() {
+        System.out.println("Starting game thread");
+        if (t == null) {
+            t = new Thread(this, "listen");
+            t.start();
         }
     }
 
