@@ -133,6 +133,17 @@ public class Player {
         myTable = new int[TABLE_SIZE][TABLE_SIZE];
     }
 
+    public void reset() {
+        numberOfCorrectGuesses = 0;
+        opponentId = -1;
+        opponentName = "";
+
+        myTurn = false;
+
+        remaining = SHIPS;
+        myTable = new int[TABLE_SIZE][TABLE_SIZE];
+    }
+
     public void decrRemaining() {
         remaining--;
     }

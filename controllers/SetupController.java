@@ -366,6 +366,7 @@ public class SetupController implements Runnable, Initialise {
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            p.reset();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -399,6 +400,7 @@ public class SetupController implements Runnable, Initialise {
             System.out.println("Got new players");
             stop = true;
             counter.stop();
+            p.reset();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

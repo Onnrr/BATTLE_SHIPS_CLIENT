@@ -13,6 +13,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import models.AppManager;
 import models.Cell;
+import models.Counter;
 import models.Initialise;
 import models.Player;
 
@@ -55,6 +56,7 @@ public class GameplayController implements Initialise, Runnable {
     boolean stop;
     int lastGuessColumn;
     int lastGuessRow;
+    Counter counter;
 
     @Override
     public void initialise(Player player) {
@@ -181,6 +183,7 @@ public class GameplayController implements Initialise, Runnable {
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            p.reset();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -198,6 +201,7 @@ public class GameplayController implements Initialise, Runnable {
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            p.reset();
             // counter.stop();
             Platform.runLater(new Runnable() {
                 @Override
@@ -216,8 +220,12 @@ public class GameplayController implements Initialise, Runnable {
             if (myButtons[row][column].isOccupied()) {
                 p.sendMessage(HIT);
                 myButtons[row][column].getStyleClass().add("hit");
-                // TODO update remainings
-                // Check if game ended
+                p.decrRemaining();
+                remShipsText.setText("Remaining Ships : " + p.getRemaining());
+                if (p.getRemaining() == 0) {
+                    System.out.println("You lose");
+                    // TODO go to lose scene
+                }
             } else {
                 p.sendMessage(MISS);
                 myButtons[row][column].getStyleClass().add("miss");
@@ -227,8 +235,12 @@ public class GameplayController implements Initialise, Runnable {
         } else if (result[0].equals(CORRECT_GUESS)) {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);
             buttons[lastGuessRow][lastGuessColumn].getStyleClass().add("hit");
-            // TODO update remainings
-            // Check if game ended
+            p.incrementCorrectGuess();
+            oppShipsText.setText("Opponent's remaining ships : " + p.getOppRemaining());
+            if (p.getOppRemaining() == 0) {
+                System.out.println("You win");
+                // TODO go to win scene
+            }
         } else if (result[0].equals(INCORRECT_GUESS)) {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);
         } else {
