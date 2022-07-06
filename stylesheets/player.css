@@ -1,0 +1,22 @@
+.online {
+    -fx-background-color: #00db2f;
+    background-color: #00db2f;
+    -fx-padding: 20px;
+    padding: 20px;
+    -fx-border-insets: 20px;
+    -fx-background-insets: 20px;
+}
+
+.onlineUserName {
+    -fx-font-size: 20;
+    font-size: 20;
+}
+
+.inGame {
+    -fx-background-color: #9be739;
+    background-color: #9be739;
+    -fx-padding: 20px;
+    padding: 20px;
+    -fx-border-insets: 20px;
+    -fx-background-insets: 20px;
+}

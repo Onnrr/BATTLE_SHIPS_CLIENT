@@ -44,6 +44,8 @@ public class LobbyController implements Initialise, Runnable {
     final String INVITATION = "INVITATION";
     final String DECLINED = "DECLINED";
     final String NEW_MESSAGE = "MESSAGE";
+    final String STARTED_GAME = "STARTED_GAME";
+    final String LEFT_GAME = "LEFT_GAME";
 
     @FXML
     Button logoutButton;
@@ -308,6 +310,31 @@ public class LobbyController implements Initialise, Runnable {
             message = message.replace(result[2], "");
             message = message.trim();
             chat.receiveMessage(result[2], message);
+        } else if (result[0].equals(STARTED_GAME)) {
+            for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
+                if (((OnlinePlayer) onlinePlayers.getChildren().get(i)).getID() == Integer.parseInt(result[1])) {
+                    final Integer index = Integer.valueOf(i);
+                    System.out.println("çalışıoo");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((OnlinePlayer) onlinePlayers.getChildren().get(index)).inGame();
+                        }
+                    });
+                }
+            }
+        } else if (result[0].equals(LEFT_GAME)) {
+            for (int i = 0; i < onlinePlayers.getChildren().size(); i++) {
+                if (((OnlinePlayer) onlinePlayers.getChildren().get(i)).getID() == Integer.parseInt(result[1])) {
+                    final Integer index = Integer.valueOf(i);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((OnlinePlayer) onlinePlayers.getChildren().get(index)).leftGame();
+                        }
+                    });
+                }
+            }
         } else {
             // System.out.println(message);
         }

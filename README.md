@@ -44,15 +44,13 @@ Javafx standart interface Initialisable for initialising new scenes cannot be us
 * Notification deletes are random
 
 #### TODO
-* In game label (Players that are in game cannot be invited etc.)
 * Warnings using jfoenix in login-signup etc.
-* Gameplay
 * Dynamic score table update (might add profiles so names will be links to them)
 * Message notification (Automatically deletes when the chat is opened)
 * Notification order (new notifications should be on top)
 * Styling like there is no tomorrow
 * Add a decent how to play
-* Add countdown to setup and game
+* Add countdown to game
 * Loading
 
 #### MAYBE LATER

@@ -20,9 +20,11 @@ public class Player {
     int score;
     String onlinePlayers;
     String rank;
+    int moveCount;
 
     int numberOfCorrectGuesses;
     int remaining;
+    int isWinner;
 
     boolean myTurn;
 
@@ -45,11 +47,26 @@ public class Player {
         this.out = out;
         opponentId = -1;
         opponentName = "";
+        moveCount = 0;
+
+        isWinner = -1;
 
         myTurn = false;
 
         remaining = SHIPS;
         myTable = new int[TABLE_SIZE][TABLE_SIZE];
+    }
+
+    public boolean isWinner() {
+        return isWinner == 1;
+    }
+
+    public void setWinner(boolean win) {
+        if (win) {
+            isWinner = 1;
+            return;
+        }
+        isWinner = 0;
     }
 
     public void setMyTurn(boolean turn) {
@@ -108,6 +125,10 @@ public class Player {
         return score;
     }
 
+    public void setScore(int newScore) {
+        score = newScore;
+    }
+
     public String getMail() {
         return mail;
     }
@@ -135,8 +156,10 @@ public class Player {
 
     public void reset() {
         numberOfCorrectGuesses = 0;
+        moveCount = 0;
         opponentId = -1;
         opponentName = "";
+        isWinner = -1;
 
         myTurn = false;
 
@@ -158,5 +181,13 @@ public class Player {
 
     public int getRemaining() {
         return remaining;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void incrementMoveCount() {
+        moveCount++;
     }
 }

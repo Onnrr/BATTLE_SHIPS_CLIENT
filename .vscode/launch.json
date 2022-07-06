@@ -9,7 +9,6 @@
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path D:\\ONUR\\staj\\javafx-sdk-18.0.1\\lib --add-modules=javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -17,7 +16,7 @@
             "request": "launch",
             "mainClass": "Main",
             "projectName": "BATTLE_SHIPS_CLIENT_35551e6f",
-            "vmArgs": "--module-path D:\\ONUR\\staj\\javafx-sdk-18.0.1\\lib --add-modules=javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path lib\\javafx-sdk-18.0.1\\lib --add-modules=javafx.controls,javafx.fxml"
         }
     ]
 }

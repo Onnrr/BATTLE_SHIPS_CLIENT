@@ -2,7 +2,6 @@ package models;
 
 import java.io.File;
 
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,7 +13,6 @@ public class OnlinePlayer extends AnchorPane {
     int status;
     int id;
     InviteButton inviteButton;
-    Button joinButton;
     ImageView image;
     ImageView invite;
     ImageView join;
@@ -40,17 +38,19 @@ public class OnlinePlayer extends AnchorPane {
         invite.setFitHeight(20);
         invite.setFitWidth(20);
 
-        file = new File("images/plus.png");
-        img = new Image(file.toURI().toString());
-        join.setImage(img);
-        join.setFitHeight(20);
-        join.setFitWidth(20);
-
         image.minHeight(100);
         image.minWidth(100);
 
-        this.getStylesheets().add(getClass().getResource("/stylesheets/lobby.css").toExternalForm());
-        this.getStyleClass().add("online");
+        this.getStylesheets().add(getClass().getResource("/stylesheets/player.css").toExternalForm());
+
+        if (status == 0) {
+            this.getStyleClass().add("online");
+            inviteButton.setDisable(false);
+        } else {
+            this.getStyleClass().add("inGame");
+            inviteButton.setDisable(true);
+        }
+
         userNameText.getStyleClass().add("onlineUserName");
 
         this.setMaxHeight(150);
@@ -59,13 +59,9 @@ public class OnlinePlayer extends AnchorPane {
         this.setMinWidth(150);
 
         inviteButton.setMinSize(30, 30);
-        inviteButton.setMaxSize(30, 30);
-        joinButton = new Button();
-        joinButton.setMinSize(30, 30);
-        joinButton.setMaxSize(30, 30);
 
         inviteButton.setGraphic(invite);
-        joinButton.setGraphic(join);
+        inviteButton.setText("Invite");
 
         AnchorPane.setTopAnchor(userNameText, 0.0);
         AnchorPane.setLeftAnchor(userNameText, 5.0);
@@ -75,11 +71,7 @@ public class OnlinePlayer extends AnchorPane {
         AnchorPane.setBottomAnchor(inviteButton, 5.0);
         AnchorPane.setLeftAnchor(inviteButton, 5.0);
 
-        AnchorPane.setBottomAnchor(joinButton, 5.0);
-        AnchorPane.setRightAnchor(joinButton, 5.0);
-
         this.getChildren().add(userNameText);
-        this.getChildren().add(joinButton);
         this.getChildren().add(inviteButton);
         this.getChildren().add(image);
     }
@@ -98,5 +90,19 @@ public class OnlinePlayer extends AnchorPane {
 
     public InviteButton getInviteButton() {
         return inviteButton;
+    }
+
+    public void inGame() {
+        status = 1;
+        inviteButton.setDisable(true);
+        this.getStyleClass().remove("online");
+        this.getStyleClass().add("inGame");
+    }
+
+    public void leftGame() {
+        status = 0;
+        inviteButton.setDisable(false);
+        this.getStyleClass().remove("inGame");
+        this.getStyleClass().add("online");
     }
 }

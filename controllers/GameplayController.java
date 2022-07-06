@@ -19,6 +19,8 @@ import models.Player;
 
 public class GameplayController implements Initialise, Runnable {
     final int TABLE_SIZE = 10;
+    final int WIN_POINTS = 100;
+    final int LOSE_POINTS = 10;
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";
@@ -28,6 +30,8 @@ public class GameplayController implements Initialise, Runnable {
     final String MISS = "miss";
     final String CORRECT_GUESS = "HIT";
     final String INCORRECT_GUESS = "MISS";
+    final String WIN = "win";
+    final String LOSE = "lose";
 
     @FXML
     GridPane rightGrid;
@@ -66,7 +70,7 @@ public class GameplayController implements Initialise, Runnable {
         start();
         p = player;
         remShipsText.setText("Remaining Ships : " + p.getRemaining());
-        oppShipsText.setText("Opponent's remaining ships : " + p.getOppRemaining());
+        oppShipsText.setText(p.getOpponentName() + "'s remaining ships : " + p.getOppRemaining());
         buttons = new Cell[TABLE_SIZE][TABLE_SIZE];
         myButtons = new Cell[TABLE_SIZE][TABLE_SIZE];
 
@@ -154,7 +158,7 @@ public class GameplayController implements Initialise, Runnable {
         guess += " " + lastGuessColumn;
         System.out.println(guess);
         p.sendMessage(GUESS + " " + guess);
-
+        p.incrementMoveCount();
         p.setMyTurn(false);
         turnText.setText(p.getOpponentName() + "'s Turn");
 
@@ -223,8 +227,15 @@ public class GameplayController implements Initialise, Runnable {
                 p.decrRemaining();
                 remShipsText.setText("Remaining Ships : " + p.getRemaining());
                 if (p.getRemaining() == 0) {
+                    stop = true;
+                    p.setWinner(false);
+                    p.setScore(p.getScore() - LOSE_POINTS);
+                    if (p.getScore() < 0) {
+                        p.setScore(0);
+                    }
+                    p.sendMessage(LOSE + " " + p.getScore());
                     System.out.println("You lose");
-                    // TODO go to lose scene
+                    AppManager.changeScene(getClass().getResource("/views/result.fxml"), turnText, p);
                 }
             } else {
                 p.sendMessage(MISS);
@@ -236,10 +247,14 @@ public class GameplayController implements Initialise, Runnable {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);
             buttons[lastGuessRow][lastGuessColumn].getStyleClass().add("hit");
             p.incrementCorrectGuess();
-            oppShipsText.setText("Opponent's remaining ships : " + p.getOppRemaining());
+            oppShipsText.setText(p.getOpponentName() + "'s remaining ships : " + p.getOppRemaining());
             if (p.getOppRemaining() == 0) {
+                stop = true;
+                p.setWinner(true);
+                p.setScore(p.getScore() + WIN_POINTS);
+                p.sendMessage(WIN + " " + p.getScore());
                 System.out.println("You win");
-                // TODO go to win scene
+                AppManager.changeScene(getClass().getResource("/views/result.fxml"), turnText, p);
             }
         } else if (result[0].equals(INCORRECT_GUESS)) {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);

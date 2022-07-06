@@ -41,7 +41,6 @@ public class AppManager {
                 try {
                     loader.load();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 Initialise c2 = loader.getController();
