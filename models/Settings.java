@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,7 @@ import javafx.scene.Node;
 public class Settings extends AnchorPane {
     final String DISCONNECT = "disconnect";
     final String DELETE_ACCOUNT = "delete";
+    final String CHANGE_PASSWORD = "change_password";
     final String GAME_EXPLANATION = "Lorem ipsum dolor sit amet, consectetur\n adipiscing elit. Nunc sed condimentum nisl,\n eget varius ante. Nullam non diam vel nisi\n finibus sagittis. Fusce ut risus et mauris\n lacinia dignissim in eu leo. Donec\n varius ligula lobortis ornare iaculis.\n Aliquam erat volutpat. Suspendisse\n egestas diam turpis, vel scelerisque neque\n suscipit eget. Ut pellentesque enim ut nibh\n rutrum, quis volutpat ex finibus. Etiam\n tortor tellus, luctus in cursus et,\n luctus non eros.";
     ImageView profile;
     Text userName;
@@ -27,6 +29,10 @@ public class Settings extends AnchorPane {
     Text howTo;
     Text explanation;
     Player p;
+
+    PasswordField exPassword;
+    PasswordField newPassword;
+    Button changePasswordButton;
 
     public Settings(Player player) {
         p = player;
@@ -41,6 +47,16 @@ public class Settings extends AnchorPane {
         mail.getStyleClass().add("settingsText");
 
         logout.getStyleClass().add("logoutButton");
+
+        changePasswordButton = new Button("Change Password");
+        exPassword = new PasswordField();
+        newPassword = new PasswordField();
+        exPassword.setPromptText("Current Password");
+        newPassword.setPromptText("New Password");
+
+        changePasswordButton.setOnMouseClicked(e -> {
+            changePassword(e);
+        });
 
         logout.setOnMouseClicked(e -> {
             logout(e);
@@ -83,8 +99,18 @@ public class Settings extends AnchorPane {
         AnchorPane.setTopAnchor(mail, 120.0);
         AnchorPane.setLeftAnchor(mail, 20.0);
 
+        AnchorPane.setBottomAnchor(changePasswordButton, 100.0);
+        AnchorPane.setLeftAnchor(changePasswordButton, 20.0);
+
+        AnchorPane.setBottomAnchor(newPassword, 140.0);
+        AnchorPane.setLeftAnchor(newPassword, 20.0);
+
+        AnchorPane.setBottomAnchor(exPassword, 200.0);
+        AnchorPane.setLeftAnchor(exPassword, 20.0);
+
         this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        this.getChildren().addAll(userName, score, logout, deleteAccount, howTo, explanation, accountTitle, mail);
+        this.getChildren().addAll(userName, score, logout, deleteAccount, howTo, explanation, accountTitle, mail,
+                changePasswordButton, newPassword, exPassword);
         this.getStyleClass().add("settings");
 
     }
@@ -127,6 +153,25 @@ public class Settings extends AnchorPane {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void changePassword(MouseEvent e) {
+        if (exPassword.getText().equals("") || newPassword.getText().equals("")) {
+            return;
+        }
+        if (newPassword.getText().length() < 4) {
+            System.out.println("Password too short");
+            return;
+            // TODO
+        }
+        if (newPassword.getText().length() > 16) {
+            System.out.println("Password too long");
+            return;
+            // TODO
+        }
+        p.sendMessage(CHANGE_PASSWORD + " " + exPassword.getText() + " " + newPassword.getText());
+        exPassword.setText("");
+        newPassword.setText("");
     }
 
 }

@@ -3,10 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,7 +21,7 @@
 <GridPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" styleClass="background" stylesheets="@../stylesheets/start.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="0.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="600.0" prefWidth="1100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1100.0" minWidth="600.0" percentWidth="100.0" prefWidth="1100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="0.0" />
   </columnConstraints>
   <rowConstraints>
@@ -70,7 +74,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Hyperlink text="Forgot Your Password?" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Hyperlink onAction="#forgotPassword" text="Forgot Your Password?" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -116,6 +120,58 @@
                   </Text>
                </children>
             </GridPane>
+         </children>
+      </GridPane>
+      <GridPane fx:id="darkPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="20.8" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <GridPane fx:id="resetPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="45.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Text fill="WHITE" layoutX="57.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset Password">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="resetMailField" layoutX="54.0" layoutY="137.0" prefHeight="55.0" prefWidth="430.0" promptText="Mail" />
+                  <Text fill="WHITE" layoutX="59.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your mail address used for creating your account. A new password will be sent to you via e-mail" wrappingWidth="349.0963134765625">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <CheckBox fx:id="acceptCheckBox" layoutX="62.0" layoutY="216.0" mnemonicParsing="false" onAction="#acceptCheckBox" text="I accept resetting my password and receiving a new one via mail" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <Button fx:id="resetButton" layoutX="54.0" layoutY="261.0" mnemonicParsing="false" onAction="#resetPassword" prefHeight="42.0" prefWidth="435.0" text="Reset" />
+                  <Button layoutX="512.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeReset" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/cancel_white.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </GridPane>
    </children>

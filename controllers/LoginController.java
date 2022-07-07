@@ -16,28 +16,32 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.*;;
 
-/**
- * Move server connection to login button open app offline
- */
-public class LoginController implements Initializable {
+public class LoginController implements Initializable, Runnable {
     final String SUCCESS = "SUCCESS";
     final String FAIL = "FAIL";
     final String INVALID_NAME = "NAME";
     final String INVALID_MAIL = "MAIL";
     final String INFO = "INFO";
     final String LOGIN_CHECK = "login";
+    final String RESET_PASSWORD = "reset_password";
+    final String PASSWORD_RESET = "PASSWORD_RESET";
+    final String PASSWORD_RESET_FAIL = "PASSWORD_RESET_FAIL";
 
     boolean run;
     Socket s;
     BufferedReader in;
     PrintWriter out;
     String message;
+    Thread t;
+    boolean stop;
 
     @FXML
     TextField nameField;
@@ -53,6 +57,43 @@ public class LoginController implements Initializable {
 
     @FXML
     Text nameError;
+
+    @FXML
+    GridPane darkPane;
+
+    @FXML
+    GridPane resetPane;
+
+    @FXML
+    TextField resetMailField;
+
+    @FXML
+    Button resetButton;
+
+    @FXML
+    CheckBox acceptCheckBox;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        stop = false;
+        nameError.setVisible(false);
+        passwordError.setVisible(false);
+
+        darkPane.setVisible(false);
+        darkPane.setDisable(true);
+
+        resetPane.setVisible(false);
+        resetPane.setDisable(true);
+
+        resetButton.setDisable(true);
+
+        nameField.setOnMouseClicked(e -> {
+            reset();
+        });
+        passwordField.setOnMouseClicked(e -> {
+            reset();
+        });
+    }
 
     public void login(ActionEvent e) throws IOException {
         if (nameField.getText().equals("")) {
@@ -138,19 +179,6 @@ public class LoginController implements Initializable {
         return password;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        nameError.setVisible(false);
-        passwordError.setVisible(false);
-
-        nameField.setOnMouseClicked(e -> {
-            reset();
-        });
-        passwordField.setOnMouseClicked(e -> {
-            reset();
-        });
-    }
-
     public void reset() {
         nameError.setVisible(false);
         passwordError.setVisible(false);
@@ -159,4 +187,83 @@ public class LoginController implements Initializable {
         passwordField.getStyleClass().remove("invalid");
 
     }
+
+    public void forgotPassword(ActionEvent e) {
+        darkPane.setVisible(true);
+        darkPane.setDisable(false);
+        resetPane.setVisible(true);
+        resetPane.setDisable(false);
+    }
+
+    public void resetPassword(ActionEvent e) {
+        try {
+            s = new Socket("localhost", 9999);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new PrintWriter(s.getOutputStream(), true);
+        } catch (IOException e1) {
+            System.out.println("Failed due to connection");
+            return;
+        }
+        if (resetMailField.getText().equals("") || !resetMailField.getText().contains("@")) {
+            System.out.println("invalid mail");
+            return;
+        }
+        out.println(RESET_PASSWORD + " " + resetMailField.getText());
+        darkPane.setVisible(false);
+        darkPane.setDisable(true);
+
+        resetPane.setVisible(false);
+        resetPane.setDisable(true);
+
+        resetButton.setDisable(true);
+        acceptCheckBox.setSelected(false);
+    }
+
+    public void acceptCheckBox(ActionEvent e) {
+        if (acceptCheckBox.isSelected()) {
+            resetButton.setDisable(false);
+        } else {
+            resetButton.setDisable(true);
+        }
+    }
+
+    public void closeReset(ActionEvent e) {
+        resetMailField.setText("");
+        acceptCheckBox.setSelected(false);
+        resetButton.setDisable(true);
+        darkPane.setVisible(false);
+        darkPane.setDisable(true);
+        resetPane.setVisible(false);
+        resetPane.setDisable(true);
+    }
+
+    public void closeReset() {
+        resetMailField.setText("");
+        acceptCheckBox.setSelected(false);
+        resetButton.setDisable(true);
+        darkPane.setVisible(false);
+        darkPane.setDisable(true);
+        resetPane.setVisible(false);
+        resetPane.setDisable(true);
+    }
+
+    @Override
+    public void run() {
+        String message = "";
+        while (!stop) {
+            try {
+                message = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (message.equals(PASSWORD_RESET)) {
+                System.out.println("Success");
+                closeReset();
+            } else if (message.equals(PASSWORD_RESET_FAIL)) {
+                System.out.println("Fail");
+                closeReset();
+            }
+        }
+    }
+
 }

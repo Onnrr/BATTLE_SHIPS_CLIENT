@@ -46,6 +46,8 @@ public class LobbyController implements Initialise, Runnable {
     final String NEW_MESSAGE = "MESSAGE";
     final String STARTED_GAME = "STARTED_GAME";
     final String LEFT_GAME = "LEFT_GAME";
+    final String PASSWORD_CHANGED = "PASSWORD_CHANGED";
+    final String PASSWORD_CHANGE_FAIL = "PASSWORD_CHANGE_FAIL";
 
     @FXML
     Button logoutButton;
@@ -335,6 +337,12 @@ public class LobbyController implements Initialise, Runnable {
                     });
                 }
             }
+        } else if (result[0].equals(PASSWORD_CHANGED)) {
+            System.out.println("password changed");
+            // TODO
+        } else if (result[0].equals(PASSWORD_CHANGE_FAIL)) {
+            System.out.println("password change failed");
+            // TODO
         } else {
             // System.out.println(message);
         }
