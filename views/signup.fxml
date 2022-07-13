@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -65,10 +66,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="User Name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="mailField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Mail Address" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <PasswordField fx:id="repeatPasswordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#reset" promptText="Pasword Again" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#nameTab" onMouseClicked="#reset" promptText="User Name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="mailField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#mailTab" onMouseClicked="#reset" promptText="Mail Address" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#passwordTab" onMouseClicked="#reset" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <PasswordField fx:id="repeatPasswordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#signup" onKeyPressed="#repeatPasswordTab" onMouseClicked="#reset" promptText="Password Again" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Button maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#signup" styleClass="signupButton" text="Sign Up" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="10.0" />
@@ -136,6 +137,66 @@
                         </DropShadow>
                      </effect>
                   </Text>
+                  <Pane fx:id="nameBack" maxHeight="20.0" maxWidth="100.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <children>
+                        <Text fx:id="nameTag" fill="WHITE" layoutX="11.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="mailBack" maxHeight="20.0" maxWidth="50.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <children>
+                        <Text fx:id="mailTag" fill="WHITE" layoutX="10.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mail">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="passwordBack" maxHeight="20.0" maxWidth="80.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <children>
+                        <Text fx:id="passwordTag" fill="WHITE" layoutX="7.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="repeatPasswordBack" maxHeight="20.0" maxWidth="130.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets bottom="-12.0" left="15.0" />
+                     </GridPane.margin>
+                     <children>
+                        <Text fx:id="repeatPasswordTag" fill="WHITE" layoutX="6.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Repeat Password">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
                </children>
             </GridPane>
          </children>

@@ -7,13 +7,13 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -64,8 +64,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="User Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#login" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#nameFieldTab" promptText="User Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#login" onKeyPressed="#passwordFieldTab" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Button maxWidth="1.7976931348623157E308" minHeight="50.0" minWidth="130.0" mnemonicParsing="false" onAction="#login" styleClass="loginButton" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets top="10.0" />
@@ -74,7 +74,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Hyperlink onAction="#forgotPassword" text="Forgot Your Password?" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Hyperlink onAction="#forgotPassword" stylesheets="@../stylesheets/start.css" text="Forgot Your Password?" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -99,30 +99,41 @@
                         </Hyperlink>
                      </children>
                   </HBox>
-                  <Text fx:id="passwordError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Wrong user name or password" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
+                  <Pane fx:id="textBack1" maxHeight="20.0" maxWidth="100.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="-12.0" left="15.0" />
+                        <Insets bottom="-25.0" left="12.0" />
                      </GridPane.margin>
-                     <effect>
-                        <DropShadow height="9.3" radius="3.5650000000000004" width="6.96" />
-                     </effect>
-                  </Text>
-                  <Text fx:id="nameError" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="User name cannot be empty" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <children>
+                        <Text fx:id="passwordError" layoutX="3.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="Wrong user name or password" wrappingWidth="244.1162109375" y="-2.0">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="passwordTag" fill="WHITE" layoutX="3.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="textBack2" maxHeight="20.0" maxWidth="232.0" prefHeight="200.0" prefWidth="200.0" styleClass="text-bg" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
-                        <Insets bottom="-12.0" left="15.0" />
+                        <Insets bottom="-12.0" left="12.0" />
                      </GridPane.margin>
-                     <effect>
-                        <DropShadow height="9.3" radius="3.5650000000000004" width="6.96" />
-                     </effect>
-                  </Text>
+                     <children>
+                        <Text fx:id="nameError" layoutX="4.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errortext" text="User name cannot be empty" y="-2.0" />
+                        <Text fx:id="nameTag" fill="WHITE" layoutX="4.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
                </children>
             </GridPane>
          </children>
       </GridPane>
-      <GridPane fx:id="darkPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" style="-fx-background-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane fx:id="darkPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" opacity="0.3" style="-fx-background-color: black;" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -130,7 +141,7 @@
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="20.8" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <GridPane fx:id="resetPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <GridPane fx:id="resetPane" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="45.0" prefWidth="100.0" />
@@ -142,7 +153,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 1;" styleClass="background" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Text fill="WHITE" layoutX="57.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset Password">
                      <font>
@@ -160,8 +171,12 @@
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <Button fx:id="resetButton" layoutX="54.0" layoutY="261.0" mnemonicParsing="false" onAction="#resetPassword" prefHeight="42.0" prefWidth="435.0" text="Reset" />
-                  <Button layoutX="512.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeReset" style="-fx-background-color: transparent;">
+                  <Button fx:id="resetButton" layoutX="54.0" layoutY="261.0" mnemonicParsing="false" onAction="#resetPassword" prefHeight="42.0" prefWidth="435.0" styleClass="resetButton" text="Reset">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button layoutX="512.0" layoutY="11.0" mnemonicParsing="false" onAction="#closeReset" styleClass="closeButton" stylesheets="@../stylesheets/start.css">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -169,7 +184,19 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
+                  <Pane fx:id="mailBack" layoutX="69.0" layoutY="127.0" maxHeight="20.0" maxWidth="50.0" prefHeight="20.0" prefWidth="500.0" style="-fx-background-color: #4C4E52;">
+                     <children>
+                        <Text fx:id="mailTag" fill="WHITE" layoutX="8.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mail">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

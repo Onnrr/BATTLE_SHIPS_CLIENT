@@ -72,6 +72,7 @@ public class ResultController implements Initialise, Runnable {
             p.setOnlinePlayers(message);
         } else if (result[0].equals(RANK)) {
             p.setRank(message);
+            stop = true;
             try {
                 Platform.runLater(new Runnable() {
                     @Override

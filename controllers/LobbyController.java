@@ -191,7 +191,11 @@ public class LobbyController implements Initialise, Runnable {
     }
 
     private void execute(String message) throws IOException {
+        if (message == null) {
+            return;
+        }
         String[] result = message.split(" ");
+
         if (result[0].equals(CONNECTED)) {
             // Adds connected player to the list
             InviteButton inviteButton = new InviteButton(Integer.parseInt(result[1]), result[2]);

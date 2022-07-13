@@ -4,22 +4,27 @@
 }
 
 .text-field {
-    -fx-background-color: #414346;
-    background-color: #414346;
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-border-width: 0 0 2 2;
-    border-width: 0 0 2 2;
+    -fx-border-width: 2 2 3 2;
+    border-width: 2 2 3 2;
     -fx-border-color: #1c034c;
     border-color: #1c034c;
     -fx-text-fill: white;
+
+    -fx-border-radius: 10 10 0 0;
+    border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+
 }
 
 .text-field:hover {
     -fx-background-color: #383a3d;
     background-color: #383a3d;
-    -fx-border-width: 0 0 3 2;
-    border-width: 0 0 3 2;
+    -fx-border-width: 2 2 3 2;
+    border-width: 2 2 3 2;
     -fx-font-size: 19;
     font-size: 19;
     -fx-border-color: #1c034c;
@@ -28,10 +33,10 @@
 }
 
 .text-field:focused {
-    -fx-background-color: #383a3d;
-    background-color: #383a3d;
-    -fx-border-width: 0 0 3 2;
-    border-width: 0 0 3 2;
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
+    -fx-border-width: 2 2 3 2;
+    border-width: 2 2 3 2;
     -fx-font-size: 19;
     font-size: 19;
     -fx-border-color: #1c034c;
@@ -40,12 +45,12 @@
 }
 
 .password-field {
-    -fx-background-color: #414346;
-    background-color: #414346;
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
     -fx-font-size: 18;
     font-size: 18;
-    -fx-border-width: 0 0 2 2;
-    border-width: 0 0 2 2;
+    -fx-border-width: 2 2 3 2;
+    border-width: 2 2 3 2;
     -fx-border-color: #1c034c;
     border-color: #1c034c;
     -fx-text-fill: white;
@@ -88,6 +93,8 @@
     -fx-underline: false;
     -fx-font-size: 14;
     font-size: 14;
+    -fx-font-weight: 900;
+    font-weight: 900;
 }
 
 .hyperlink:hover {
@@ -95,27 +102,78 @@
     -fx-underline: true;
     -fx-font-size: 14;
     font-size: 14;
+    -fx-font-weight: 900;
+    font-weight: 900;
 }
 
 .invalid {
-    -fx-border-width: 0 2 2 2;
-    border-width: 0 2 2 2;
+    -fx-border-width: 2 2 4 2;
+    border-width: 2 2 4 2;
     -fx-border-color: rgb(140, 0, 0);
     border-color: rgb(140, 0, 0);
 }
 
 .errortext {
-    -fx-background-color: #172500;
-    background-color: #172500;
-    -fx-fill: rgb(170, 23, 23);
-    fill: rgb(170, 23, 23);
-    -fx-font-size: 18;
-    font-size: 18;
+    -fx-fill: rgb(136, 14, 14);
+    fill: rgb(134, 16, 16);
+    -fx-font-size: 16;
+    font-size: 16;
+    -fx-font-weight: 800;
+    font-weight: 800;
 }
 
 .invalid:hover {
-    -fx-border-width: 0 2 2 2;
-    border-width: 0 2 2 2;
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
+    -fx-border-width: 2 2 4 2;
+    border-width: 2 2 4 2;
     -fx-border-color: rgb(140, 0, 0);
     border-color: rgb(140, 0, 0);
+}
+
+.invalid:focused {
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
+    -fx-border-width: 2 2 4 2;
+    border-width: 2 2 4 2;
+    -fx-border-color: rgb(140, 0, 0);
+    border-color: rgb(140, 0, 0);
+}
+
+.resetButton {
+    -fx-background-color: #34068a;
+    background-color: #34068a;
+    -fx-font-size: 18;
+    font-size: 18;
+    -fx-text-fill: white;
+}
+
+.resetButton:hover {
+    -fx-background-color: #30057e;
+    background-color: #30057e;
+    -fx-font-size: 18;
+    font-size: 18;
+    -fx-text-fill: white;
+}
+
+.closeButton {
+    -fx-background-color: transparent;
+    background-color: transparent;
+}
+
+.closeButton:hover {
+    -fx-background-color: #383a3d;
+    background-color: #383a3d;
+}
+
+.text-bg {
+    -fx-background-color: #4C4E52;
+    background-color: #4C4E52;
+}
+
+.success {
+    -fx-border-width: 2 2 4 2;
+    border-width: 2 2 4 2;
+    -fx-border-color: rgb(19, 140, 0);
+    border-color: rgb(0, 140, 0);
 }

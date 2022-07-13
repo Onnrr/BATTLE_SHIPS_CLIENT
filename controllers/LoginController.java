@@ -9,6 +9,7 @@ import java.net.URL;
 
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
@@ -19,7 +20,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.*;;
@@ -73,11 +78,41 @@ public class LoginController implements Initializable, Runnable {
     @FXML
     CheckBox acceptCheckBox;
 
+    @FXML
+    Pane textBack1;
+
+    @FXML
+    Pane textBack2;
+
+    @FXML
+    Text nameTag;
+
+    @FXML
+    Text passwordTag;
+
+    @FXML
+    Text mailTag;
+
+    @FXML
+    Pane mailBack;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         stop = false;
         nameError.setVisible(false);
         passwordError.setVisible(false);
+
+        nameField.deselect();
+
+        mailBack.setVisible(false);
+
+        textBack1.setMaxWidth(75);
+        textBack2.setMaxWidth(90);
+
+        nameTag.setVisible(true);
+        passwordTag.setVisible(false);
+
+        textBack1.setVisible(false);
 
         darkPane.setVisible(false);
         darkPane.setDisable(true);
@@ -89,21 +124,70 @@ public class LoginController implements Initializable, Runnable {
 
         nameField.setOnMouseClicked(e -> {
             reset();
+            nameTag.setVisible(true);
+            textBack2.setVisible(true);
+            textBack2.setMaxWidth(90);
         });
+
         passwordField.setOnMouseClicked(e -> {
             reset();
+            passwordTag.setVisible(true);
+            textBack1.setVisible(true);
+            textBack1.setMaxWidth(75);
+        });
+
+        nameField.setOnDragDetected(e -> {
+            reset();
+            nameTag.setVisible(true);
+            textBack2.setVisible(true);
+            textBack2.setMaxWidth(90);
+        });
+
+        passwordField.setOnDragDetected(e -> {
+            reset();
+            passwordTag.setVisible(true);
+            textBack1.setVisible(true);
+            textBack1.setMaxWidth(75);
+        });
+
+        resetMailField.setOnMouseClicked(e -> {
+            mailTag.setText("Mail");
+            mailBack.setMaxWidth(50);
+            mailBack.setMinWidth(50);
+            mailTag.getStyleClass().remove("errortext");
+            resetMailField.getStyleClass().remove("invalid");
+            mailBack.setVisible(true);
+        });
+
+        resetMailField.setOnDragDetected(e -> {
+            mailTag.setText("Mail");
+            mailBack.setMaxWidth(50);
+            mailBack.setMinWidth(50);
+            mailTag.getStyleClass().remove("errortext");
+            resetMailField.getStyleClass().remove("invalid");
+            mailBack.setVisible(true);
         });
     }
 
     public void login(ActionEvent e) throws IOException {
+        textBack1.setMaxWidth(220);
+        textBack2.setMaxWidth(220);
         if (nameField.getText().equals("")) {
             nameError.setVisible(true);
+            textBack2.setVisible(true);
+            textBack1.setVisible(false);
+            passwordTag.setVisible(false);
+            nameTag.setVisible(false);
             nameError.setText("User name cannot be empty");
             nameField.getStyleClass().add("invalid");
             return;
         }
         if (passwordField.getText().equals("")) {
             passwordError.setVisible(true);
+            textBack1.setVisible(true);
+            textBack2.setVisible(false);
+            passwordTag.setVisible(false);
+            nameTag.setVisible(false);
             passwordError.setText("Password cannot be empty");
             passwordField.getStyleClass().add("invalid");
             return;
@@ -114,7 +198,14 @@ public class LoginController implements Initializable, Runnable {
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {
             System.out.println("Failed due to connection");
-            // TODO
+            textBack1.setMaxWidth(225);
+            passwordError.setText("Cannot connect to the server");
+            passwordError.setVisible(true);
+            textBack1.setVisible(true);
+            textBack2.setVisible(false);
+            passwordTag.setVisible(false);
+            nameTag.setVisible(false);
+            passwordField.getStyleClass().add("invalid");
             return;
         }
 
@@ -135,6 +226,10 @@ public class LoginController implements Initializable, Runnable {
         if (result[0].equals(FAIL)) {
             passwordError.setText("Wrong user name or password");
             passwordError.setVisible(true);
+            textBack1.setVisible(true);
+            textBack2.setVisible(false);
+            passwordTag.setVisible(false);
+            nameTag.setVisible(false);
             passwordField.getStyleClass().add("invalid");
         } else if (result[0].equals(INFO)) {
             System.out.println("Login successful");
@@ -182,6 +277,8 @@ public class LoginController implements Initializable, Runnable {
     public void reset() {
         nameError.setVisible(false);
         passwordError.setVisible(false);
+        textBack1.setVisible(false);
+        textBack2.setVisible(false);
 
         nameField.getStyleClass().remove("invalid");
         passwordField.getStyleClass().remove("invalid");
@@ -189,6 +286,7 @@ public class LoginController implements Initializable, Runnable {
     }
 
     public void forgotPassword(ActionEvent e) {
+        reset();
         darkPane.setVisible(true);
         darkPane.setDisable(false);
         resetPane.setVisible(true);
@@ -196,26 +294,32 @@ public class LoginController implements Initializable, Runnable {
     }
 
     public void resetPassword(ActionEvent e) {
+        if (resetMailField.getText().equals("") || !resetMailField.getText().contains("@")) {
+            mailTag.setText("Invalid mail");
+            mailBack.setMinWidth(100);
+            mailTag.getStyleClass().add("errortext");
+            resetMailField.getStyleClass().add("invalid");
+            mailBack.setVisible(true);
+            System.out.println("invalid mail");
+            return;
+        }
         try {
             s = new Socket("localhost", 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {
+            mailTag.setText("Connection failed");
+            mailBack.setMinWidth(150);
+            mailTag.getStyleClass().add("errortext");
+            resetMailField.getStyleClass().add("invalid");
+            mailBack.setVisible(true);
             System.out.println("Failed due to connection");
             return;
         }
-        if (resetMailField.getText().equals("") || !resetMailField.getText().contains("@")) {
-            System.out.println("invalid mail");
-            return;
-        }
+
+        start();
         out.println(RESET_PASSWORD + " " + resetMailField.getText());
-        darkPane.setVisible(false);
-        darkPane.setDisable(true);
 
-        resetPane.setVisible(false);
-        resetPane.setDisable(true);
-
-        resetButton.setDisable(true);
         acceptCheckBox.setSelected(false);
     }
 
@@ -228,6 +332,18 @@ public class LoginController implements Initializable, Runnable {
     }
 
     public void closeReset(ActionEvent e) {
+        mailTag.getStyleClass().remove("errortext");
+        resetMailField.getStyleClass().remove("invalid");
+        textBack1.setMaxWidth(75);
+        textBack2.setMaxWidth(90);
+
+        nameTag.setVisible(true);
+        passwordTag.setVisible(false);
+
+        mailBack.setVisible(false);
+
+        textBack1.setVisible(false);
+        textBack2.setVisible(true);
         resetMailField.setText("");
         acceptCheckBox.setSelected(false);
         resetButton.setDisable(true);
@@ -238,6 +354,18 @@ public class LoginController implements Initializable, Runnable {
     }
 
     public void closeReset() {
+        mailTag.getStyleClass().remove("errortext");
+        resetMailField.getStyleClass().remove("invalid");
+        mailBack.setVisible(false);
+
+        textBack1.setMaxWidth(75);
+        textBack2.setMaxWidth(90);
+
+        nameTag.setVisible(true);
+        passwordTag.setVisible(false);
+
+        textBack1.setVisible(false);
+        textBack2.setVisible(true);
         resetMailField.setText("");
         acceptCheckBox.setSelected(false);
         resetButton.setDisable(true);
@@ -257,12 +385,46 @@ public class LoginController implements Initializable, Runnable {
                 e.printStackTrace();
             }
             if (message.equals(PASSWORD_RESET)) {
+                out.println("disconnect");
                 System.out.println("Success");
                 closeReset();
+                stop = true;
             } else if (message.equals(PASSWORD_RESET_FAIL)) {
+                out.println("disconnect");
                 System.out.println("Fail");
-                closeReset();
+                mailTag.setText("No account found with mail");
+                mailBack.setMinWidth(200);
+                mailTag.getStyleClass().add("errortext");
+                resetMailField.getStyleClass().add("invalid");
+                mailBack.setVisible(true);
+
+                stop = true;
             }
+        }
+    }
+
+    public void start() {
+        System.out.println("Starting listen");
+        if (t == null) {
+            t = new Thread(this, "listen");
+            t.start();
+        }
+    }
+
+    public void nameFieldTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            nameTag.setVisible(false);
+            textBack2.setVisible(false);
+            passwordTag.setVisible(true);
+            textBack1.setVisible(true);
+            textBack1.setMaxWidth(75);
+        }
+    }
+
+    public void passwordFieldTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            passwordTag.setVisible(false);
+            textBack1.setVisible(false);
         }
     }
 

@@ -18,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
@@ -60,10 +62,118 @@ public class SignupController implements Initializable {
     @FXML
     Text passwordError;
 
+    @FXML
+    Text nameTag;
+
+    @FXML
+    Text mailTag;
+
+    @FXML
+    Text passwordTag;
+
+    @FXML
+    Text repeatPasswordTag;
+
+    @FXML
+    Pane nameBack;
+
+    @FXML
+    Pane mailBack;
+
+    @FXML
+    Pane passwordBack;
+
+    @FXML
+    Pane repeatPasswordBack;
+
     Socket s;
     BufferedReader in;
     PrintWriter out;
     String message;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        nameBack.setVisible(true);
+        mailBack.setVisible(false);
+        passwordBack.setVisible(false);
+        repeatPasswordBack.setVisible(false);
+
+        nameField.setOnMouseClicked(e -> {
+            reset();
+            nameTag.setText("User Name");
+            nameBack.setMaxWidth(100);
+            nameBack.setVisible(true);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(false);
+        });
+        passwordField.setOnMouseClicked(e -> {
+            reset();
+            passwordTag.setText("Password");
+            passwordBack.setMaxWidth(80);
+            nameBack.setVisible(false);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(true);
+            repeatPasswordBack.setVisible(false);
+        });
+        mailField.setOnMouseClicked(e -> {
+            reset();
+            mailTag.setText("Mail");
+            mailBack.setMaxWidth(50);
+            nameBack.setVisible(false);
+            mailBack.setVisible(true);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(false);
+        });
+        repeatPasswordField.setOnMouseClicked(e -> {
+            reset();
+            repeatPasswordTag.setText("Repeat password");
+            repeatPasswordBack.setMaxWidth(130);
+            nameBack.setVisible(false);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(true);
+        });
+
+        nameField.setOnDragDetected(e -> {
+            reset();
+            nameTag.setText("User Name");
+            nameBack.setMaxWidth(100);
+            nameBack.setVisible(true);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(false);
+        });
+        passwordField.setOnDragDetected(e -> {
+            reset();
+            passwordTag.setText("Password");
+            passwordBack.setMaxWidth(80);
+            nameBack.setVisible(false);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(true);
+            repeatPasswordBack.setVisible(false);
+        });
+        mailField.setOnDragDetected(e -> {
+            reset();
+            mailTag.setText("Mail");
+            mailBack.setMaxWidth(50);
+            nameBack.setVisible(false);
+            mailBack.setVisible(true);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(false);
+        });
+        repeatPasswordField.setOnDragDetected(e -> {
+            reset();
+            repeatPasswordTag.setText("Repeat password");
+            repeatPasswordBack.setMaxWidth(130);
+            nameBack.setVisible(false);
+            mailBack.setVisible(false);
+            passwordBack.setVisible(false);
+            repeatPasswordBack.setVisible(true);
+        });
+
+    }
 
     public void haveAnAccount(ActionEvent e) {
         FXMLLoader loader = new FXMLLoader();
@@ -98,56 +208,76 @@ public class SignupController implements Initializable {
         int precheck = valid();
 
         if (precheck == NAME_EMPTY) {
-            nameError.setVisible(true);
-            nameError.setText("User name cannot be empty");
+            nameBack.setVisible(true);
+            nameBack.setMaxWidth(230);
+            nameTag.setText("User name cannot be empty");
+            nameTag.getStyleClass().add("errortext");
             nameField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == NAME_TOO_SHORT) {
-            nameError.setVisible(true);
-            nameError.setText("User name is too short");
+            nameBack.setVisible(true);
+            nameBack.setMaxWidth(190);
+            nameTag.setText("User name is too short");
+            nameTag.getStyleClass().add("errortext");
+
             nameField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == NAME_TOO_LONG) {
-            nameError.setVisible(true);
-            nameError.setText("User name is too long");
+            nameBack.setVisible(true);
+            nameBack.setMaxWidth(190);
+            nameTag.setText("User name is too long");
+            nameTag.getStyleClass().add("errortext");
+
             nameField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == MAIL_EMPTY) {
-            mailError.setVisible(true);
-            mailError.setText("Mail cannot be empty");
+            mailBack.setVisible(true);
+            mailBack.setMaxWidth(180);
+            mailTag.setText("Mail cannot be empty");
+            mailTag.getStyleClass().add("errortext");
             mailField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == INVALID_MAIL) {
-            mailError.setVisible(true);
-            mailError.setText("Invalid mail");
+            mailBack.setVisible(true);
+            mailBack.setMaxWidth(120);
+            mailTag.setText("Invalid Mail");
+            mailTag.getStyleClass().add("errortext");
             mailField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_EMPTY) {
-            passwordError.setVisible(true);
-            passwordError.setText("Password cannot be empty");
+            passwordBack.setVisible(true);
+            passwordBack.setMaxWidth(200);
+            passwordTag.setText("Password cannot be empty");
+            passwordTag.getStyleClass().add("errortext");
             passwordField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_TOO_SHORT) {
-            passwordError.setVisible(true);
-            passwordError.setText("Password is too short");
+            passwordBack.setVisible(true);
+            passwordBack.setMaxWidth(180);
+            passwordTag.setText("Password is too short");
+            passwordTag.getStyleClass().add("errortext");
             passwordField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_TOO_LONG) {
-            passwordError.setVisible(true);
-            passwordError.setText("Password is too long");
+            passwordBack.setVisible(true);
+            passwordBack.setMaxWidth(180);
+            passwordTag.setText("Password is too long");
+            passwordTag.getStyleClass().add("errortext");
             passwordField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
         } else if (precheck == PASSWORD_MATCH) {
-            passwordError.setVisible(true);
-            passwordError.setText("Passwords do not match");
+            passwordBack.setVisible(true);
+            passwordBack.setMaxWidth(220);
+            passwordTag.setText("Passwords do not match");
+            passwordTag.getStyleClass().add("errortext");
             passwordField.getStyleClass().add("invalid");
             out.println("disconnect");
             return;
@@ -166,13 +296,21 @@ public class SignupController implements Initializable {
         }
 
         if (message.equals(SUCCESS)) {
+            reset();
             System.out.println("Account created");
+            mailField.setText("");
+            nameField.setText("");
+            passwordField.setText("");
+            repeatPasswordField.setText("");
+            nameField.getStyleClass().add("success");
         } else if (message.equals(FAIL)) {
             System.out.println("Failed");
 
-            nameField.getStyleClass().add("invalid");
-            mailError.setVisible(true);
-            mailError.setText("User name or mail is already used");
+            mailBack.setVisible(true);
+            mailBack.setMaxWidth(120);
+            mailTag.setText("User name or mail is already used");
+            mailTag.getStyleClass().add("errortext");
+
             mailField.getStyleClass().add("invalid");
             out.println("disconnect");
         } else {
@@ -193,6 +331,9 @@ public class SignupController implements Initializable {
         if (mailField.getText().equals("")) {
             return MAIL_EMPTY;
         }
+        if (!mailField.getText().contains("@")) {
+            return INVALID_MAIL;
+        }
         if (passwordField.getText().equals("")) {
             return PASSWORD_EMPTY;
         }
@@ -205,9 +346,7 @@ public class SignupController implements Initializable {
         if (!passwordField.getText().equals(repeatPasswordField.getText())) {
             return PASSWORD_MATCH;
         }
-        if (!mailField.getText().contains("@")) {
-            return INVALID_MAIL;
-        }
+
         return VALID;
     }
 
@@ -215,10 +354,21 @@ public class SignupController implements Initializable {
         nameError.setVisible(false);
         mailError.setVisible(false);
         passwordError.setVisible(false);
-
+        mailBack.setMaxWidth(50);
+        nameBack.setMaxWidth(100);
+        passwordBack.setMaxWidth(80);
+        repeatPasswordBack.setMaxWidth(130);
         nameField.getStyleClass().remove("invalid");
         mailField.getStyleClass().remove("invalid");
         passwordField.getStyleClass().remove("invalid");
+        nameTag.getStyleClass().remove("errortext");
+        passwordTag.getStyleClass().remove("errortext");
+        mailTag.getStyleClass().remove("errortext");
+        repeatPasswordTag.getStyleClass().remove("errortext");
+        nameBack.setVisible(false);
+        mailBack.setVisible(false);
+        passwordBack.setVisible(false);
+        repeatPasswordBack.setVisible(false);
 
     }
 
@@ -227,20 +377,37 @@ public class SignupController implements Initializable {
         return password;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        nameField.setOnMouseClicked(e -> {
-            reset();
-        });
-        passwordField.setOnMouseClicked(e -> {
-            reset();
-        });
-        mailField.setOnMouseClicked(e -> {
-            reset();
-        });
-        repeatPasswordField.setOnMouseClicked(e -> {
-            reset();
-        });
-
+    public void nameTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            nameBack.setVisible(false);
+            mailTag.setVisible(true);
+            mailBack.setVisible(true);
+            mailBack.setMaxWidth(50);
+        }
     }
+
+    public void mailTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            mailBack.setVisible(false);
+            passwordTag.setVisible(true);
+            passwordBack.setVisible(true);
+            passwordBack.setMaxWidth(80);
+        }
+    }
+
+    public void passwordTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            passwordBack.setVisible(false);
+            repeatPasswordTag.setVisible(true);
+            repeatPasswordBack.setVisible(true);
+            repeatPasswordBack.setMaxWidth(130);
+        }
+    }
+
+    public void repeatPasswordTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            repeatPasswordBack.setVisible(false);
+        }
+    }
+
 }
