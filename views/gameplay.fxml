@@ -71,7 +71,7 @@
                </children>
             </GridPane>
             <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" styleClass="background" stylesheets="@../stylesheets/gameplay.css" GridPane.rowIndex="1" />
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="7" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Text fx:id="counterText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="7" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="30.0" />
                </GridPane.margin>

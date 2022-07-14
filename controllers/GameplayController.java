@@ -21,6 +21,7 @@ public class GameplayController implements Initialise, Runnable {
     final int TABLE_SIZE = 10;
     final int WIN_POINTS = 100;
     final int LOSE_POINTS = 10;
+    final int TURN_DURATION = 10;
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";
@@ -32,6 +33,7 @@ public class GameplayController implements Initialise, Runnable {
     final String INCORRECT_GUESS = "MISS";
     final String WIN = "win";
     final String LOSE = "lose";
+    final String SKIP = "SKIP";
 
     @FXML
     GridPane rightGrid;
@@ -51,6 +53,9 @@ public class GameplayController implements Initialise, Runnable {
     @FXML
     Text remShipsText;
 
+    @FXML
+    Text counterText;
+
     GridPane opponentTable;
     GridPane myTable;
     Cell[][] buttons;
@@ -64,6 +69,7 @@ public class GameplayController implements Initialise, Runnable {
 
     @Override
     public void initialise(Player player) {
+        counter = new Counter(TURN_DURATION, counterText, turnText, player);
         lastGuessColumn = -1;
         lastGuessRow = -1;
         stop = false;
@@ -76,7 +82,11 @@ public class GameplayController implements Initialise, Runnable {
 
         if (p.isMyTurn()) {
             turnText.setText("Your Turn");
+            counterText.setVisible(true);
+            counter.reset();
+            counter.start();
         } else {
+            counterText.setVisible(false);
             turnText.setText(p.getOpponentName() + "'s Turn");
         }
         setUpGrid(p);
@@ -151,6 +161,9 @@ public class GameplayController implements Initialise, Runnable {
         if (!p.isMyTurn()) {
             return;
         }
+        counter.stop();
+        counter.reset();
+        counterText.setVisible(false);
         lastGuessRow = ((Cell) e.getSource()).getRow();
         lastGuessColumn = ((Cell) e.getSource()).getColumn();
 
@@ -187,6 +200,7 @@ public class GameplayController implements Initialise, Runnable {
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            counter.stop();
             p.reset();
             Platform.runLater(new Runnable() {
                 @Override
@@ -206,7 +220,7 @@ public class GameplayController implements Initialise, Runnable {
             System.out.println("Got new players");
             stop = true;
             p.reset();
-            // counter.stop();
+            counter.stop();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -243,6 +257,9 @@ public class GameplayController implements Initialise, Runnable {
             }
             p.setMyTurn(true);
             turnText.setText("Your Turn");
+            counterText.setVisible(true);
+            counter = new Counter(TURN_DURATION, counterText, turnText, p);
+            counter.start();
         } else if (result[0].equals(CORRECT_GUESS)) {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);
             buttons[lastGuessRow][lastGuessColumn].getStyleClass().add("hit");
@@ -258,6 +275,12 @@ public class GameplayController implements Initialise, Runnable {
             }
         } else if (result[0].equals(INCORRECT_GUESS)) {
             buttons[lastGuessRow][lastGuessColumn].setDisable(true);
+        } else if (result[0].equals(SKIP)) {
+            p.setMyTurn(true);
+            turnText.setText("Your Turn");
+            counterText.setVisible(true);
+            counter = new Counter(TURN_DURATION, counterText, turnText, p);
+            counter.start();
         } else {
             System.out.println(message);
         }
