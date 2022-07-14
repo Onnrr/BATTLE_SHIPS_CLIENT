@@ -14,8 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -129,8 +127,6 @@ public class LobbyController implements Initialise, Runnable {
             rank++;
         }
 
-        // homeButton.getStyleClass().remove("menuButton");
-        // homeButton.getStyleClass().add("selected");
     }
 
     public void invite(MouseEvent event) {
@@ -360,13 +356,6 @@ public class LobbyController implements Initialise, Runnable {
             return;
         }
         currentScene = HOME;
-        // settingsButton.getStyleClass().add("menuButton");
-        // settingsButton.getStyleClass().remove("selected");
-
-        // chatButton.getStyleClass().add("menuButton");
-        // chatButton.getStyleClass().remove("selected");
-        // homeButton.getStyleClass().remove("menuButton");
-        // homeButton.getStyleClass().add("selected");
         root.getChildren().remove(chat);
         root.getChildren().remove(settings);
         root.add(onlinePlayers, 1, 0);
@@ -377,14 +366,6 @@ public class LobbyController implements Initialise, Runnable {
             return;
         }
         currentScene = SETTINGS;
-        // homeButton.getStyleClass().add("menuButton");
-        // homeButton.getStyleClass().remove("selected");
-
-        // chatButton.getStyleClass().add("menuButton");
-        // chatButton.getStyleClass().remove("selected");
-
-        // settingsButton.getStyleClass().remove("menuButton");
-        // settingsButton.getStyleClass().add("selected");
         root.getChildren().remove(chat);
         root.getChildren().remove(onlinePlayers);
         root.add(settings, 1, 0);
@@ -395,14 +376,6 @@ public class LobbyController implements Initialise, Runnable {
             return;
         }
         currentScene = CHAT;
-        // settingsButton.getStyleClass().add("menuButton");
-        // settingsButton.getStyleClass().remove("selected");
-
-        // homeButton.getStyleClass().add("menuButton");
-        // homeButton.getStyleClass().remove("selected");
-
-        // chatButton.getStyleClass().remove("menuButton");
-        // chatButton.getStyleClass().add("selected");
         root.getChildren().remove(onlinePlayers);
         root.getChildren().remove(settings);
         root.add(chat, 1, 0);
