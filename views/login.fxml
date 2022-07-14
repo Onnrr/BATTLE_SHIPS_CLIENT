@@ -86,7 +86,7 @@
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <Hyperlink onAction="#register" text="Register" textFill="WHITE">
+                        <Hyperlink onAction="#register" onKeyPressed="#registerTab" text="Register" textFill="WHITE">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

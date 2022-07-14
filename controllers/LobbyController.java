@@ -49,6 +49,10 @@ public class LobbyController implements Initialise, Runnable {
     final String PASSWORD_CHANGED = "PASSWORD_CHANGED";
     final String PASSWORD_CHANGE_FAIL = "PASSWORD_CHANGE_FAIL";
 
+    final int HOME = 0;
+    final int CHAT = 1;
+    final int SETTINGS = 2;
+
     @FXML
     Button logoutButton;
 
@@ -87,6 +91,7 @@ public class LobbyController implements Initialise, Runnable {
     Button sendButton;
     TextField field;
     boolean stop;
+    int currentScene; // 0 home, 1 chat, 2 settings
 
     @Override
     public void initialise(Player player) {
@@ -97,42 +102,12 @@ public class LobbyController implements Initialise, Runnable {
         System.out.println(p.getOnlinePlayers());
         start();
         notificationsBox.getChildren().clear();
-
+        currentScene = HOME;
         settings = new Settings(player);
 
         sendButton = new Button();
         field = new TextField();
         chat = new Chat(player, field, sendButton);
-
-        ImageView home = new ImageView();
-        ImageView logout = new ImageView();
-        ImageView settings = new ImageView();
-        ImageView chat = new ImageView();
-
-        File file = new File("images/home.png");
-        Image img = new Image(file.toURI().toString());
-        home.setImage(img);
-        home.setFitHeight(30);
-        home.setFitWidth(30);
-        homeButton.setGraphic(home);
-        file = new File("images/settings.png");
-        img = new Image(file.toURI().toString());
-        settings.setImage(img);
-        settings.setFitHeight(30);
-        settings.setFitWidth(30);
-        settingsButton.setGraphic(settings);
-        file = new File("images/logout.png");
-        img = new Image(file.toURI().toString());
-        logout.setImage(img);
-        logout.setFitHeight(30);
-        logout.setFitWidth(30);
-        logoutButton.setGraphic(logout);
-        file = new File("images/chat.png");
-        img = new Image(file.toURI().toString());
-        chat.setImage(img);
-        chat.setFitHeight(30);
-        chat.setFitWidth(30);
-        chatButton.setGraphic(chat);
 
         String[] result = p.getOnlinePlayers().split(" ");
         for (int i = 1; i < result.length - 2; i += 3) {
@@ -154,8 +129,8 @@ public class LobbyController implements Initialise, Runnable {
             rank++;
         }
 
-        homeButton.getStyleClass().remove("menuButton");
-        homeButton.getStyleClass().add("selected");
+        // homeButton.getStyleClass().remove("menuButton");
+        // homeButton.getStyleClass().add("selected");
     }
 
     public void invite(MouseEvent event) {
@@ -381,41 +356,53 @@ public class LobbyController implements Initialise, Runnable {
     }
 
     public void toHome(ActionEvent e) {
-        settingsButton.getStyleClass().add("menuButton");
-        settingsButton.getStyleClass().remove("selected");
+        if (currentScene == HOME) {
+            return;
+        }
+        currentScene = HOME;
+        // settingsButton.getStyleClass().add("menuButton");
+        // settingsButton.getStyleClass().remove("selected");
 
-        chatButton.getStyleClass().add("menuButton");
-        chatButton.getStyleClass().remove("selected");
-        homeButton.getStyleClass().remove("menuButton");
-        homeButton.getStyleClass().add("selected");
+        // chatButton.getStyleClass().add("menuButton");
+        // chatButton.getStyleClass().remove("selected");
+        // homeButton.getStyleClass().remove("menuButton");
+        // homeButton.getStyleClass().add("selected");
         root.getChildren().remove(chat);
         root.getChildren().remove(settings);
         root.add(onlinePlayers, 1, 0);
     }
 
     public void toSettings(ActionEvent e) {
-        homeButton.getStyleClass().add("menuButton");
-        homeButton.getStyleClass().remove("selected");
+        if (currentScene == SETTINGS) {
+            return;
+        }
+        currentScene = SETTINGS;
+        // homeButton.getStyleClass().add("menuButton");
+        // homeButton.getStyleClass().remove("selected");
 
-        chatButton.getStyleClass().add("menuButton");
-        chatButton.getStyleClass().remove("selected");
+        // chatButton.getStyleClass().add("menuButton");
+        // chatButton.getStyleClass().remove("selected");
 
-        settingsButton.getStyleClass().remove("menuButton");
-        settingsButton.getStyleClass().add("selected");
+        // settingsButton.getStyleClass().remove("menuButton");
+        // settingsButton.getStyleClass().add("selected");
         root.getChildren().remove(chat);
         root.getChildren().remove(onlinePlayers);
         root.add(settings, 1, 0);
     }
 
     public void toChat(ActionEvent e) {
-        settingsButton.getStyleClass().add("menuButton");
-        settingsButton.getStyleClass().remove("selected");
+        if (currentScene == CHAT) {
+            return;
+        }
+        currentScene = CHAT;
+        // settingsButton.getStyleClass().add("menuButton");
+        // settingsButton.getStyleClass().remove("selected");
 
-        homeButton.getStyleClass().add("menuButton");
-        homeButton.getStyleClass().remove("selected");
+        // homeButton.getStyleClass().add("menuButton");
+        // homeButton.getStyleClass().remove("selected");
 
-        chatButton.getStyleClass().remove("menuButton");
-        chatButton.getStyleClass().add("selected");
+        // chatButton.getStyleClass().remove("menuButton");
+        // chatButton.getStyleClass().add("selected");
         root.getChildren().remove(onlinePlayers);
         root.getChildren().remove(settings);
         root.add(chat, 1, 0);

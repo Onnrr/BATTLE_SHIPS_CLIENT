@@ -366,6 +366,7 @@ public class SetupController implements Runnable, Initialise {
             p.setOnlinePlayers(onlinePlayers);
             System.out.println("Got new players");
             stop = true;
+            p.sendMessage(LEAVE);
             p.reset();
             Platform.runLater(new Runnable() {
                 @Override

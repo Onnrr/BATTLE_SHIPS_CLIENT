@@ -2,6 +2,7 @@ package models;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,10 +33,12 @@ public class Settings extends AnchorPane {
 
     PasswordField exPassword;
     PasswordField newPassword;
+    PasswordField repeatPassword;
     Button changePasswordButton;
 
     public Settings(Player player) {
         p = player;
+        this.getStylesheets().add(getClass().getResource("/stylesheets/settings.css").toExternalForm());
         userName = new Text("User Name : " + p.getName());
         score = new Text("Score : " + p.getScore());
         explanation = new Text(GAME_EXPLANATION);
@@ -51,10 +54,12 @@ public class Settings extends AnchorPane {
         changePasswordButton = new Button("Change Password");
         exPassword = new PasswordField();
         newPassword = new PasswordField();
+        repeatPassword = new PasswordField();
         exPassword.setPromptText("Current Password");
         newPassword.setPromptText("New Password");
+        repeatPassword.setPromptText("Repeat Password");
 
-        changePasswordButton.setOnMouseClicked(e -> {
+        changePasswordButton.setOnAction(e -> {
             changePassword(e);
         });
 
@@ -66,6 +71,11 @@ public class Settings extends AnchorPane {
             deleteAccount(e);
         });
 
+        newPassword.setOnAction(e -> {
+            changePassword(e);
+        });
+
+        changePasswordButton.getStyleClass().add("changePasswordButton");
         deleteAccount.getStyleClass().add("deleteButton");
         userName.getStyleClass().add("settingsText");
 
@@ -76,9 +86,17 @@ public class Settings extends AnchorPane {
 
         explanation.getStyleClass().add("settingsText");
         explanation.maxWidth(10);
+
+        exPassword.setMinWidth(300);
+        newPassword.setMinWidth(300);
+        repeatPassword.setMinWidth(300);
+
+        changePasswordButton.setMinWidth(300);
+        changePasswordButton.setMaxHeight(10);
+
         AnchorPane.setTopAnchor(userName, 70.0);
         AnchorPane.setLeftAnchor(userName, 20.0);
-        AnchorPane.setTopAnchor(score, 170.0);
+        AnchorPane.setTopAnchor(score, 150.0);
         AnchorPane.setLeftAnchor(score, 20.0);
 
         AnchorPane.setBottomAnchor(logout, 30.0);
@@ -96,21 +114,24 @@ public class Settings extends AnchorPane {
         AnchorPane.setLeftAnchor(explanation, 400.0);
         AnchorPane.setTopAnchor(explanation, 70.0);
 
-        AnchorPane.setTopAnchor(mail, 120.0);
+        AnchorPane.setTopAnchor(mail, 110.0);
         AnchorPane.setLeftAnchor(mail, 20.0);
 
-        AnchorPane.setBottomAnchor(changePasswordButton, 100.0);
+        AnchorPane.setBottomAnchor(changePasswordButton, 110.0);
         AnchorPane.setLeftAnchor(changePasswordButton, 20.0);
 
-        AnchorPane.setBottomAnchor(newPassword, 140.0);
+        AnchorPane.setBottomAnchor(newPassword, 220.0);
         AnchorPane.setLeftAnchor(newPassword, 20.0);
 
-        AnchorPane.setBottomAnchor(exPassword, 200.0);
+        AnchorPane.setBottomAnchor(exPassword, 280.0);
         AnchorPane.setLeftAnchor(exPassword, 20.0);
+
+        AnchorPane.setBottomAnchor(repeatPassword, 160.0);
+        AnchorPane.setLeftAnchor(repeatPassword, 20.0);
 
         this.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.getChildren().addAll(userName, score, logout, deleteAccount, howTo, explanation, accountTitle, mail,
-                changePasswordButton, newPassword, exPassword);
+                changePasswordButton, newPassword, exPassword, repeatPassword);
         this.getStyleClass().add("settings");
 
     }
@@ -155,7 +176,7 @@ public class Settings extends AnchorPane {
         stage.show();
     }
 
-    public void changePassword(MouseEvent e) {
+    public void changePassword(ActionEvent e) {
         if (exPassword.getText().equals("") || newPassword.getText().equals("")) {
             return;
         }
@@ -169,9 +190,14 @@ public class Settings extends AnchorPane {
             return;
             // TODO
         }
+        if (!newPassword.getText().equals(repeatPassword.getText())) {
+            System.out.println("Passwords don't match");
+            return;
+        }
         p.sendMessage(CHANGE_PASSWORD + " " + exPassword.getText() + " " + newPassword.getText());
         exPassword.setText("");
         newPassword.setText("");
+        repeatPassword.setText("");
     }
 
 }

@@ -24,11 +24,22 @@
 .menuButton {
     -fx-background-color: #1c034c;
     background-color: #1c034c;
+
+    -fx-max-height: 60px;
+    max-height: 60px;
 }
 
 .menuButton:hover {
     -fx-background-color: #34068a;
     background-color: #34068a;
+    -fx-min-height: 80px;
+    min-height: 80px;
+    -fx-max-height: 80px;
+    max-height: 80px;
+}
+
+.menuButton:hover .buttonImage {
+    -fx-translate-y: -10px
 }
 
 .headerTitle {
@@ -59,46 +70,10 @@
     font-size: 20;
 }
 
-.settings {
-    -fx-background-color: GRAY;
-    background-color: GRAY;
-}
 
 .chat {
     -fx-background-color: GRAY;
     background-color: GRAY;
-}
-
-.logoutButton {
-    -fx-background-color: #505050;
-    background-color: #505050;
-    -fx-font-size: 18;
-    font-size: 18;
-    -fx-text-fill: white;
-}
-
-.logoutButton:hover {
-    -fx-background-color: #414141;
-    background-color: #414141;
-    -fx-font-size: 18;
-    font-size: 18;
-    -fx-text-fill: white;
-}
-
-.deleteButton {
-    -fx-background-color: #7e0505;
-    background-color: #7e0505;
-    -fx-font-size: 18;
-    font-size: 18;
-    -fx-text-fill: white;
-}
-
-.deleteButton:hover {
-    -fx-background-color: #720505;
-    background-color: #720505;
-    -fx-font-size: 18;
-    font-size: 18;
-    -fx-text-fill: white;
 }
 
 .selected {
@@ -109,20 +84,6 @@
 .selected:hover {
     -fx-background-color: GRAY;
     background-color: GRAY;
-}
-
-.settingsTitle {
-    -fx-fill: white;
-    fill: white;
-    -fx-font-size: 28;
-    font-size: 28;
-}
-
-.settingsText {
-    -fx-fill: white;
-    fill: white;
-    -fx-font-size: 18;
-    font-size: 18;
 }
 
 .text-field {
@@ -167,6 +128,8 @@
     -fx-font-size: 18;
     font-size: 18;
     -fx-text-fill: white;
+    -fx-cursor: hand;
+    cursor: hand;
 }
 
 .send:hover {
@@ -175,14 +138,4 @@
     -fx-font-size: 18;
     font-size: 18;
     -fx-text-fill: white;
-}
-
-.icon {
-    -fx-fill: white;
-    fill: white;
-}
-
-.aa {
-    -fx-background-color: #30057e;
-    background-color: #30057e;
 }

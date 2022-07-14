@@ -224,6 +224,7 @@ public class LoginController implements Initializable, Runnable {
 
         String[] result = message.split(" ");
         if (result[0].equals(FAIL)) {
+            textBack1.setMaxWidth(240);
             passwordError.setText("Wrong user name or password");
             passwordError.setVisible(true);
             textBack1.setVisible(true);
@@ -425,6 +426,14 @@ public class LoginController implements Initializable, Runnable {
         if (event.getCode() == KeyCode.TAB) {
             passwordTag.setVisible(false);
             textBack1.setVisible(false);
+        }
+    }
+
+    public void registerTab(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB) {
+            nameTag.setVisible(true);
+            textBack2.setVisible(true);
+            textBack2.setMaxWidth(90);
         }
     }
 
