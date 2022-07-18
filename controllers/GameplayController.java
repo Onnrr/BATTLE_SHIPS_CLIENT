@@ -68,6 +68,12 @@ public class GameplayController implements Initialise, Runnable {
     Counter counter;
 
     @Override
+    /**
+     * Initialises the game with current user's information
+     * 
+     * @param Player player stores the positions of the ships, opponent information
+     *               etc.
+     */
     public void initialise(Player player) {
         counter = new Counter(TURN_DURATION, counterText, turnText, player);
         lastGuessColumn = -1;
@@ -93,6 +99,11 @@ public class GameplayController implements Initialise, Runnable {
 
     }
 
+    /**
+     * Creates teo grids for your ships and opponent's ships
+     * 
+     * @param p Stores the positions of the ships used for initialising the grid
+     */
     public void setUpGrid(Player p) {
         opponentTable = new GridPane();
         opponentTable.setMaxHeight(Double.MAX_VALUE);
@@ -157,6 +168,13 @@ public class GameplayController implements Initialise, Runnable {
 
     }
 
+    /**
+     * Sends the server the guess as row and column values
+     * If it is not the player's turn method returns and nothing happens
+     * 
+     * @param e event of each button on the grid
+     * @throws IOException
+     */
     private void handleClick(MouseEvent e) throws IOException {
         if (!p.isMyTurn()) {
             return;
@@ -178,6 +196,9 @@ public class GameplayController implements Initialise, Runnable {
     }
 
     @Override
+    /**
+     * Thread for getting messages from the server
+     */
     public void run() {
         String message;
         while (!stop) {
@@ -187,6 +208,12 @@ public class GameplayController implements Initialise, Runnable {
         System.out.println("Thread stopped");
     }
 
+    /**
+     * Takes the server message as argument and execucutes the command
+     * 
+     * @param message message from the server
+     * @throws IOException
+     */
     public void execute(String message) {
         String[] result = message.split(" ");
         System.out.println(message);
@@ -286,6 +313,9 @@ public class GameplayController implements Initialise, Runnable {
         }
     }
 
+    /**
+     * Starts the thread
+     */
     public void start() {
         System.out.println("Starting game thread");
         if (t == null) {

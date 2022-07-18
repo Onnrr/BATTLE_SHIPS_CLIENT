@@ -29,6 +29,9 @@ import models.OnlinePlayer;
 import models.Player;
 import models.Settings;
 
+/**
+ * Controls the behaviour of lobby components
+ */
 public class LobbyController implements Initialise, Runnable {
     final String CONNECTED = "CONNECTED";
     final String DISCONNECTED = "DISCONNECTED";
@@ -91,6 +94,11 @@ public class LobbyController implements Initialise, Runnable {
     int currentScene; // 0 home, 1 chat, 2 settings
 
     @Override
+    /**
+     * Initialises lobby with information of the player
+     * 
+     * @param Player p player object to get current user information
+     */
     public void initialise(Player player) {
         stop = false;
         p = player;
@@ -128,6 +136,12 @@ public class LobbyController implements Initialise, Runnable {
 
     }
 
+    /**
+     * Event of the invite buttons. Sends invitation request to server.
+     * Also adds pending request notification
+     * 
+     * @param event
+     */
     public void invite(MouseEvent event) {
         String command = "";
         int otherID = ((InviteButton) event.getSource()).getID();
@@ -147,6 +161,9 @@ public class LobbyController implements Initialise, Runnable {
     }
 
     @Override
+    /**
+     * Thread for getting messages from the server
+     */
     public void run() {
         String message;
         while (!stop) {
@@ -160,6 +177,12 @@ public class LobbyController implements Initialise, Runnable {
         }
     }
 
+    /**
+     * Takes the server message as argument and execucutes the command
+     * 
+     * @param message message from the server
+     * @throws IOException
+     */
     private void execute(String message) throws IOException {
         if (message == null) {
             return;
@@ -322,6 +345,12 @@ public class LobbyController implements Initialise, Runnable {
         }
     }
 
+    /**
+     * Event of declining invitation using the decline button in notification
+     * Sends the server the information that the invitation is declined
+     * 
+     * @param event
+     */
     private void declineNotification(MouseEvent event) {
         Platform.runLater(new Runnable() {
             @Override
@@ -332,6 +361,12 @@ public class LobbyController implements Initialise, Runnable {
         p.sendMessage(DECLINE_GAME + " " + p.getID() + " " + ((InviteButton) event.getSource()).getID());
     }
 
+    /**
+     * Event of accepting invitation using the accept button in notification
+     * Sends the server the information that the invitation is accepted
+     * 
+     * @param event
+     */
     private void acceptNotification(MouseEvent event) {
         Platform.runLater(new Runnable() {
             @Override
@@ -342,6 +377,9 @@ public class LobbyController implements Initialise, Runnable {
         p.sendMessage(ACCEPT_GAME + " " + p.getID() + " " + ((InviteButton) event.getSource()).getID());
     }
 
+    /**
+     * Starts the thread
+     */
     public void start() {
         System.out.println("Starting listen");
         if (t == null) {
@@ -350,6 +388,11 @@ public class LobbyController implements Initialise, Runnable {
         }
     }
 
+    /**
+     * Changes the main component to home
+     * 
+     * @param e Event of home button
+     */
     public void toHome(ActionEvent e) {
         if (currentScene == HOME) {
             return;
@@ -360,6 +403,11 @@ public class LobbyController implements Initialise, Runnable {
         root.add(onlinePlayers, 1, 0);
     }
 
+    /**
+     * Changes the main component to settings
+     * 
+     * @param e Event of settings button
+     */
     public void toSettings(ActionEvent e) {
         if (currentScene == SETTINGS) {
             return;
@@ -370,6 +418,11 @@ public class LobbyController implements Initialise, Runnable {
         root.add(settings, 1, 0);
     }
 
+    /**
+     * Changes the main component to chat
+     * 
+     * @param e Event of chat button
+     */
     public void toChat(ActionEvent e) {
         if (currentScene == CHAT) {
             return;
@@ -380,6 +433,12 @@ public class LobbyController implements Initialise, Runnable {
         root.add(chat, 1, 0);
     }
 
+    /**
+     * Logs out from the game and disconnects from the server.,
+     * Also goes back to the login
+     * 
+     * @param e Event of logout button in bottom left and the one in settings.
+     */
     public void logout(ActionEvent e) {
         p.sendMessage(DISCONNECT);
         FXMLLoader loader = new FXMLLoader();

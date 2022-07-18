@@ -3,6 +3,10 @@ package models;
 import javafx.application.Platform;
 import javafx.scene.text.Text;
 
+/**
+ * Simple down counter for integers up to zero
+ * Decreases 1 at each second
+ */
 public class Counter implements Runnable {
     final String LEAVE = "leave";
     final String SKIP = "skip";
@@ -15,6 +19,13 @@ public class Counter implements Runnable {
     Player p;
     boolean stop;
 
+    /**
+     * Creates the counter for setup part
+     * 
+     * @param time   The starting value of the counter
+     * @param txt    javafx text to display the counter
+     * @param player to send messages to server according to the counter values
+     */
     public Counter(int time, Text txt, Player player) {
         seconds = time;
         text = txt;
@@ -25,6 +36,14 @@ public class Counter implements Runnable {
         maxTime = time;
     }
 
+    /**
+     * Creates the counter for game part
+     * 
+     * @param time   The starting value of the counter
+     * @param txt    javafx text to display the counter
+     * @param player to send messages to server according to the counter values
+     * @param turn   text to set turn value
+     */
     public Counter(int time, Text count, Text turn, Player player) {
         seconds = time;
         text = count;
@@ -36,6 +55,9 @@ public class Counter implements Runnable {
     }
 
     @Override
+    /**
+     * Thread to get messages from the server
+     */
     public void run() {
         System.out.println("stop = " + stop);
         while (seconds > 0 && !stop) {
@@ -65,15 +87,24 @@ public class Counter implements Runnable {
 
     }
 
+    /**
+     * Resets the counter
+     */
     public void reset() {
         System.out.println("counter reset");
         seconds = maxTime;
     }
 
+    /**
+     * Stops the counter
+     */
     public void stop() {
         stop = true;
     }
 
+    /**
+     * Starts the thread
+     */
     public void start() {
         stop = false;
         System.out.println("Starting count");
