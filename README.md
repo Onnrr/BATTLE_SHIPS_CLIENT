@@ -6,7 +6,7 @@ BattleShips is a classic game played by two players in alternating turns. Each p
 This specific game takes this to another level. By creating an account you can easily play against your friends on your local network. You can invite online players to play the game with you or write to the public chat if anyone is up for a game. By winning games you can increase your score and may become one of the top players. Have fun :)
 
 ## BackEnd
-Game connects to a server that is currently running on my computer. You can also find the code to that server in my github account at https://github.com/Onnrr/BATTLE_SHIPS. TCP/IP protocole is used for all the communication and the messages are sent in the string format. All user information are stored in a database using mySql which can only be reached by the server application. Clients send and receive information only via server commands. All of the information about the communication with the server (input and output formats and commands) and database can be found in the README file of that project.
+Game connects to a server that is currently running on my computer. You can also find the code to that backend program in my github account at https://github.com/Onnrr/BATTLE_SHIPS. TCP/IP protocole is used for all the communication and the messages are sent in the string format. All user information are stored in a database using mySql which can only be reached by the server application. Clients send and receive information only via server commands. All of the information about the communication with the server (input and output formats and commands) and database connection can be found in the README file of that project.
 
 ## Classes
 ### Player
@@ -41,16 +41,14 @@ Javafx standart interface Initialisable for initialising new scenes cannot be us
 
 #### Bugs
 * Chat messages seem weird when returned to lobby
-* Notification deletes are random
 
 #### TODO
-* Warnings using jfoenix in login-signup etc.
+* Warnings in login,signup, delete account etc.
 * Dynamic score table update (might add profiles so names will be links to them)
 * Message notification (Automatically deletes when the chat is opened)
 * Notification order (new notifications should be on top)
-* Styling like there is no tomorrow
-* Add a decent how to play
-* Add countdown to game
+* Styling
+* how to play
 * Loading
 
 #### MAYBE LATER
