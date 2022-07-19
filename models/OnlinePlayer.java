@@ -5,10 +5,12 @@ import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class OnlinePlayer extends AnchorPane {
     Text userNameText;
+    AnchorPane inGameLabel;
     public String name;
     int status;
     int id;
@@ -23,6 +25,17 @@ public class OnlinePlayer extends AnchorPane {
         this.name = name;
         this.status = status;
         userNameText = new Text(name);
+
+        Text inGame = new Text("in game");
+        inGame.getStyleClass().add("gametext");
+
+        inGameLabel = new AnchorPane();
+        inGameLabel.setMaxSize(55, 20);
+        inGameLabel.setMinSize(55, 20);
+        inGameLabel.getStyleClass().add("ingame");
+        AnchorPane.setBottomAnchor(inGame, 5.0);
+        AnchorPane.setLeftAnchor(inGame, 5.0);
+        inGameLabel.getChildren().add(inGame);
 
         image = new ImageView();
         invite = new ImageView();
@@ -71,9 +84,15 @@ public class OnlinePlayer extends AnchorPane {
         AnchorPane.setBottomAnchor(inviteButton, 5.0);
         AnchorPane.setLeftAnchor(inviteButton, 5.0);
 
+        AnchorPane.setTopAnchor(inGameLabel, -5.0);
+        AnchorPane.setRightAnchor(inGameLabel, -5.0);
+
+        inGameLabel.setVisible(false);
+        inGameLabel.setDisable(true);
         this.getChildren().add(userNameText);
         this.getChildren().add(inviteButton);
         this.getChildren().add(image);
+        this.getChildren().add(inGameLabel);
     }
 
     public String getName() {
@@ -97,6 +116,8 @@ public class OnlinePlayer extends AnchorPane {
         inviteButton.setDisable(true);
         this.getStyleClass().remove("online");
         this.getStyleClass().add("inGame");
+        inGameLabel.setVisible(true);
+        inGameLabel.setDisable(false);
     }
 
     public void leftGame() {
@@ -104,5 +125,7 @@ public class OnlinePlayer extends AnchorPane {
         inviteButton.setDisable(false);
         this.getStyleClass().remove("inGame");
         this.getStyleClass().add("online");
+        inGameLabel.setVisible(false);
+        inGameLabel.setDisable(true);
     }
 }

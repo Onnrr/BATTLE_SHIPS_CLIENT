@@ -20,6 +20,7 @@ public class AppManager {
         c2.initialise(player);
         Parent p = loader.getRoot();
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setResizable(false);
         Scene scene = new Scene(p, ((Node) e.getSource()).getScene().getWidth(),
                 ((Node) e.getSource()).getScene().getHeight());
 
@@ -47,6 +48,7 @@ public class AppManager {
                 c2.initialise(player);
                 Parent p = loader.getRoot();
                 Stage stage = (Stage) node.getScene().getWindow();
+                stage.setResizable(false);
                 Scene scene = new Scene(p, node.getScene().getWidth(),
                         node.getScene().getHeight());
 
@@ -80,6 +82,7 @@ public class AppManager {
                 Scene scene = new Scene(parent);
 
                 Stage stage = new Stage();
+                stage.setResizable(false);
                 stage.setOnCloseRequest(event -> {
                     player.sendMessage("disconnect");
                 });
@@ -110,6 +113,7 @@ public class AppManager {
                 Scene scene = new Scene(parent);
 
                 Stage stage = new Stage();
+                stage.setResizable(false);
                 stage.setOnCloseRequest(event -> {
                     player.sendMessage("disconnect");
                 });
@@ -140,6 +144,7 @@ public class AppManager {
                 Scene scene = new Scene(parent);
 
                 Stage stage = (Stage) node.getScene().getWindow();
+                stage.setResizable(false);
                 stage.setOnCloseRequest(event -> {
                     player.sendMessage("disconnect");
                 });

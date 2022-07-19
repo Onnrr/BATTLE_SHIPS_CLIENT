@@ -48,8 +48,8 @@
 }
 
 .changePasswordButton:hover {
-    -fx-background-color: #85c821;
-    background-color: #85c821;
+    -fx-background-color: #6c8805;
+    background-color: #6c8805;
     -fx-font-size: 18;
     font-size: 18;
     -fx-text-fill: white;
