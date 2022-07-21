@@ -322,10 +322,10 @@ public class SignupController implements Initializable {
         if (nameField.getText().equals("")) {
             return NAME_EMPTY;
         }
-        if (nameField.getText().length() < 4) {
+        if (nameField.getText().length() < 3) {
             return NAME_TOO_SHORT;
         }
-        if (nameField.getText().length() > 8) {
+        if (nameField.getText().length() > 16) {
             return NAME_TOO_LONG;
         }
         if (mailField.getText().equals("")) {
