@@ -21,7 +21,7 @@ public class GameplayController implements Initialise, Runnable {
     final int TABLE_SIZE = 10;
     final int WIN_POINTS = 100;
     final int LOSE_POINTS = 10;
-    final int TURN_DURATION = 10;
+    final int TURN_DURATION = 60;
     final String DISCONNECTED = "OPPONENT_DISCONNECTED";
     final String LEAVE = "leave";
     final String CAN_LEAVE = "LEAVE";

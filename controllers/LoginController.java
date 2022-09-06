@@ -28,6 +28,8 @@ import javafx.stage.Stage;
 import models.*;;
 
 public class LoginController implements Initializable, Runnable {
+    final String IP = "localhost";
+
     final String SUCCESS = "SUCCESS";
     final String FAIL = "FAIL";
     final String INVALID_NAME = "NAME";
@@ -191,7 +193,7 @@ public class LoginController implements Initializable, Runnable {
             return;
         }
         try {
-            s = new Socket("localhost", 9999);
+            s = new Socket(IP, 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {
@@ -303,7 +305,7 @@ public class LoginController implements Initializable, Runnable {
             return;
         }
         try {
-            s = new Socket("localhost", 9999);
+            s = new Socket(IP, 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {

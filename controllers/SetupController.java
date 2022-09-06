@@ -30,7 +30,7 @@ public class SetupController implements Runnable, Initialise {
     final String CAN_LEAVE = "LEAVE";
     final String TO_GAME = "to_game";
     final int TABLE_SIZE = 10;
-    final int SETUP_TIME = 60;
+    final int SETUP_TIME = 300;
     int length;
     boolean isVertical;
     Cell[][] buttons;

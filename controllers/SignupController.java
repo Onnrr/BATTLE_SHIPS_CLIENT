@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 public class SignupController implements Initializable {
+    final String IP = "localhost";
+
     final String SUCCESS = "SUCCESS";
     final String FAIL = "FAIL";
     final String CREATE = "create";
@@ -196,7 +198,7 @@ public class SignupController implements Initializable {
 
     public void signup(ActionEvent e) {
         try {
-            s = new Socket("localhost", 9999);
+            s = new Socket(IP, 9999);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
         } catch (IOException e1) {
